@@ -9,15 +9,15 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 
   // Simulação de autenticação (substituir com backend real)
   if (username === "admin" && password === "admin123" && userType === "admin") {
-    message.style.color = "green";
+    message.style.color = "Black";
     message.textContent = "Bem-vindo, Administrador!";
     // redirecionar para painel admin
   } else if (username === "medico" && password === "medico123" && userType === "medico") {
-    message.style.color = "green";
+    message.style.color = "Black";
     message.textContent = "Bem-vindo, Médico!";
     // redirecionar para painel médico
   } else if (username === "paciente" && password === "paciente123" && userType === "paciente") {
-    message.style.color = "green";
+    message.style.color = "Black";
     message.textContent = "Bem-vindo, Paciente!";
     // redirecionar para painel paciente
   } else {
