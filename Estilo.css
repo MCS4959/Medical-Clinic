@@ -9,7 +9,7 @@ header {
 
 /* Cor do corpo da página */
 body {
-  background-color: #1d8b79;
+  background: linear-gradient(to right, rgb(14, 150, 93), rgb(255, 255, 255));
   color: #000000;
   font-family: Arial, sans-serif;
   margin: 0;
