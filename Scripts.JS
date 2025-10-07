@@ -20,6 +20,10 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     message.style.color = "Black";
     message.textContent = "Bem-vindo, Paciente!";
     // redirecionar para painel paciente
+    } else if (username === "atendente" && password === "atendente123" && userType === "atendente") {
+    message.style.color = "Black";
+    message.textContent = "Bem-vindo, Atendente!";
+    // redirecionar para painel atendente
   } else {
     message.style.color = "red";
     message.textContent = "Credenciais inválidas ou tipo de usuário incorreto.";
