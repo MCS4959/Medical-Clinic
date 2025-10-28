@@ -28,4 +28,34 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     message.style.color = "red";
     message.textContent = "Credenciais inválidas ou tipo de usuário incorreto.";
   }
+  // Seleciona os elementos
+const loginForm = document.getElementById('login');
+const cadastroForm = document.getElementById('cadastro');
+const mostrarCadastro = document.getElementById('mostrarCadastro');
+const mostrarLogin = document.getElementById('mostrarLogin');
+
+// Alterna entre login e cadastro
+mostrarCadastro.addEventListener('click', (e) => {
+    e.preventDefault();
+    loginForm.classList.add('hidden');
+    cadastroForm.classList.remove('hidden');
+});
+
+mostrarLogin.addEventListener('click', (e) => {
+    e.preventDefault();
+    cadastroForm.classList.add('hidden');
+    loginForm.classList.remove('hidden');
+});
+
+// Simulação de envio de formulários
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Login efetuado com sucesso!');
+});
+
+document.getElementById('cadastroForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Cadastro realizado com sucesso!');
+});
+
 });

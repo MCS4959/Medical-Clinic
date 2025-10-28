@@ -1,0 +1,139 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Fundo */
+body {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Caixa principal */
+.login-container {
+  background: #fff;
+  width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+  overflow: hidden;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+/* Abas */
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #eee;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: #888;
+  transition: 0.3s;
+}
+
+.tab.active {
+  color: #d1006c;
+  border-bottom: 3px solid #d1006c;
+}
+
+/* Formulários */
+.form {
+  display: none;
+  flex-direction: column;
+  padding: 20px 30px;
+}
+
+.form.active {
+  display: flex;
+}
+
+.form h2 {
+  margin-bottom: 20px;
+  color: #d1006c;
+  font-size: 18px;
+}
+
+.form input {
+  margin: 8px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Botão principal */
+.btn {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #0c6ca8;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #094f79;
+}
+
+/* Links */
+.link {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #666;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.ou {
+  font-size: 12px;
+  color: #888;
+  margin: 15px 0 8px 0;
+}
+
+/* Login social */
+.social-login {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.social-btn {
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.facebook {
+  background: #3b5998;
+}
+
+.google {
+  background: #db4437;
+}
+
+.apple {
+  background: #000;
+}
