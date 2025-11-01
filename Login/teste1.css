@@ -48,6 +48,13 @@ body {
   border-bottom: 3px solid #d1006c;
 }
 
+#message {
+  font-size: 16px;
+  text-align: center;
+  margin-top: 10px;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
 /* Formulários */
 .form {
   display: none;
@@ -109,31 +116,4 @@ body {
   margin: 15px 0 8px 0;
 }
 
-/* Login social */
-.social-login {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
 
-.social-btn {
-  width: 35px;
-  height: 35px;
-  border: none;
-  border-radius: 50%;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.facebook {
-  background: #3b5998;
-}
-
-.google {
-  background: #db4437;
-}
-
-.apple {
-  background: #000;
-}

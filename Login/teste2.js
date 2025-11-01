@@ -1,3 +1,4 @@
+// Seleção de elementos
 const tabLogin = document.getElementById('tabLogin');
 const tabCadastro = document.getElementById('tabCadastro');
 const loginForm = document.getElementById('loginForm');
@@ -23,9 +24,16 @@ tabCadastro.addEventListener('click', () => {
 loginForm.addEventListener('submit', e => {
   e.preventDefault();
 
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
   const userType = document.getElementById('userType').value;
+
+  // Validação de campos obrigatórios
+  if (!username || !password || !userType) {
+    message.style.color = "red";
+    message.textContent = "⚠️ Por favor, preencha todos os campos antes de continuar.";
+    return; // Interrompe o login
+  }
 
   let redirectPage = "";
 
@@ -33,29 +41,40 @@ loginForm.addEventListener('submit', e => {
   if (username === "admin" && password === "1234" && userType === "admin") {
     message.style.color = "black";
     message.textContent = "Bem-vindo, Administrador!";
-    redirectPage = "admin.html";
+    redirectPage = "../Admin/admin.html";
+
   } else if (username === "medico" && password === "1234" && userType === "medico") {
     message.style.color = "black";
     message.textContent = "Bem-vindo, Médico!";
-    redirectPage = "medico.html";
+    redirectPage = "../Medico/medico.html";
+
   } else if (username === "paciente" && password === "1234" && userType === "paciente") {
     message.style.color = "black";
     message.textContent = "Bem-vindo, Paciente!";
-    redirectPage = "paciente.html";
+    redirectPage = "../Paciente/Paciente.html";
+
   } else if (username === "atendente" && password === "1234" && userType === "atendente") {
     message.style.color = "black";
     message.textContent = "Bem-vindo, Atendente!";
-    redirectPage = "atendente.html";
+    redirectPage = "../Atendente/atendente.html";
+
   } else {
     message.style.color = "red";
-    message.textContent = "Credenciais inválidas ou tipo de usuário incorreto.";
+    message.textContent = "❌ Credenciais inválidas ou tipo de usuário incorreto.";
   }
 
-  // Redireciona após 1 segundo, se as credenciais forem válidas
-  if (redirectPage !== "") {
+  // Exibe mensagem de carregamento e redireciona
+  if (redirectPage) {
+    // Mostra mensagem de redirecionamento
+    setTimeout(() => {
+      message.style.color = "gray";
+      message.textContent = "⏳ Redirecionando...";
+    }, 600);
+
+    // Redireciona após 1,8 segundos
     setTimeout(() => {
       window.location.href = redirectPage;
-    }, 1000);
+    }, 1800);
   }
 });
 
