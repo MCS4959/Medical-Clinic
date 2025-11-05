@@ -41,7 +41,7 @@ loginForm.addEventListener('submit', e => {
   if (username === "admin" && password === "1234" && userType === "admin") {
     message.style.color = "black";
     message.textContent = "Bem-vindo, Administrador!";
-    redirectPage = "../Admin/admin.html";
+    redirectPage = "../Administrador/administrador.html";
 
   } else if (username === "medico" && password === "1234" && userType === "medico") {
     message.style.color = "black";
