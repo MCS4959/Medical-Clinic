@@ -1,6 +1,8 @@
-// Apenas um exemplo básico de interação (pode ser expandido)
-document.querySelectorAll(".botao").forEach(botao => {
-  botao.addEventListener("click", () => {
-    alert(`Você clicou em: ${botao.innerText}`);
-  });
-});
+ // Redireciona ao clicar nos botões
+    document.getElementById("btnCadastrar").onclick = function() {
+      window.location.href = "../Administrador/CadastrarFunc/CadastrarFunc.html";
+    };
+
+    document.getElementById("btnRelatorio").onclick = function() {
+      window.location.href = "./Administrador/Relatorio.html";
+    };
