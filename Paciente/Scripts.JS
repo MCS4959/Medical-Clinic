@@ -1,6 +1,7 @@
-// Apenas um exemplo básico de interação (pode ser expandido)
-document.querySelectorAll(".botao").forEach(botao => {
-  botao.addEventListener("click", () => {
-    alert(`Você clicou em: ${botao.innerText}`);
-  });
-});
+document.getElementById("btnExames").onclick = function() {
+  window.location.href = "../Paciente/ResultadoExames/Resultado.html";
+};
+
+document.getElementById("btnAtestados").onclick = function () {
+  window.location.href = "../Paciente/Relatorio.html";
+};
