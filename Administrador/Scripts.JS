@@ -4,5 +4,5 @@
     };
 
     document.getElementById("btnRelatorio").onclick = function() {
-      window.location.href = "./Administrador/Relatorio.html";
+      window.location.href = "../Administrador/Relatorio.html";
     };

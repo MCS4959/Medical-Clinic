@@ -67,6 +67,30 @@ body {
   padding: 0 10px; /* espaço nas laterais em telas pequenas */
 }
 
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  margin: 8px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button.excluir {
+  background-color: #dc3545;
+}
+
+button.excluir:hover {
+  background-color: #a71d2a;
+}
+
+
+
 /* Estilo da tabela */
 .tabela {
   border-collapse: collapse;

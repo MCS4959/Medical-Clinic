@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Medic Clinic - Administrador</title>
 
-  <!-- CSS -->
   <link rel="stylesheet" href="EstiloCadastrar.css" />
 
-  <!-- Ícone da aba (favicon) -->
   <link rel="icon" type="image/png" href="../../Images/logo Medic Clinic top.png">
 </head>
   <header class="cabecalho">
@@ -31,38 +29,50 @@
 <body>
   <h1>Cadastrar Funcionário</h1>
 
+  <button id="btnAdd">Adicionar Funcionário</button>
+
   <div class="tabela-container">
-  <table class="tabela">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>ID</th>
-        <th>CPF</th>
-        <th>Data de Nascimento</th>
-        <th>Especialidade / Cargo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>João Silva</td>
-        <td>001</td>
-        <td>123.456.789-00</td>
-        <td>01/01/1980</td>
-        <td>Médico</td>
-      </tr>
-      <tr>
-        <td>Maria Souza</td>
-        <td>002</td>
-        <td>987.654.321-00</td>
-        <td>15/05/1990</td>
-        <td>Atendente</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <table class="tabela" id="tabelaFuncionarios">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>ID</th>
+          <th>CPF</th>
+          <th>Data de Nascimento</th>
+          <th>Especialidade / Cargo</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
+  
+  <div id="modal" class="modal">
+    <div class="modal-conteudo">
+      <span class="fechar">&times;</span>
+      <h2>Adicionar Funcionário</h2>
+      <form id="formFuncionario">
+        <label>Nome:</label>
+        <input type="text" id="nome" required><br/>
 
-  <!-- Importa o JavaScript -->
+        <label>ID:</label>
+        <input type="text" id="id" required><br/>
+
+        <label>CPF:</label>
+        <input type="text" id="cpf" required><br/>
+
+        <label>Data de Nascimento:</label>
+        <input type="date" id="nascimento" required><br/>
+
+        <label>Especialidade / Cargo:</label>
+        <input type="text" id="cargo" required><br/>
+
+      </form>
+    </div>
+  </div>
+
   <script src="ScriptsCadastrar.js"></script>
 </body>
+
 </html>
