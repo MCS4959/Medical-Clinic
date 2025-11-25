@@ -1,3 +1,4 @@
+/* ===== RESET E BASE ===== */
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -51,109 +52,228 @@ body {
   padding: 5px;
 }
 
-/* ===== CONTEÚDO ===== */
-.conteudo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - 90px);
-}
-/* Container centralizado */
+/* ===== CONTAINER DA TABELA ===== */
 .tabela-container {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 30px auto;
-  padding: 0 10px; /* espaço nas laterais em telas pequenas */
+  padding: 0 10px;
 }
 
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  margin: 8px 5px;
-  border-radius: 4px;
-  cursor: pointer;
+/* ===== TABELA DE FUNCIONÁRIOS ===== */
+.tabela-medic {
+  width: 95%;
+  max-width: 1100px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
-button.excluir {
-  background-color: #dc3545;
-}
-
-button.excluir:hover {
-  background-color: #a71d2a;
-}
-
-
-
-/* Estilo da tabela */
-.tabela {
-  border-collapse: collapse;
-  width: 90%;
-  max-width: 800px; /* largura máxima em telas grandes */
-  background-color: #f2fff2; /* verde claro */
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-  font-family: Arial, Helvetica, sans-serif;
-  table-layout: fixed; /* células com tamanho fixo proporcional */
-}
-
-/* Cabeçalho da tabela */
-.tabela thead {
-  background-color: #00b050; /* verde da logo */
+/* Cabeçalho */
+.tabela-medic thead {
+  background: linear-gradient(90deg, #009640, #00b050);
   color: white;
 }
 
-.tabela th, .tabela td {
-  border: 1px solid #000;
-  padding: 15px;
+.tabela-medic thead th {
+  padding: 14px;
+  font-size: 17px;
   text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.3);
+}
+
+.tabela-medic thead th:last-child {
+  border-right: none;
+}
+
+/* Corpo */
+.tabela-medic tbody tr {
+  background: #f9fff9;
+  transition: background 0.25s ease;
+}
+
+.tabela-medic tbody tr:nth-child(even) {
+  background: #eaffea;
+}
+
+.tabela-medic tbody tr:hover {
+  background: #d8ffd8;
+}
+
+/* Células */
+.tabela-medic td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #dcdcdc;
+  color: #003300;
+  font-weight: 500;
+}
+
+/* ===== BOTÕES DE AÇÃO ===== */
+.btn-editar,
+.btn-excluir {
+  padding: 8px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
   font-weight: bold;
-  word-wrap: break-word;
 }
 
-/* Linhas alternadas */
-.tabela tbody tr:nth-child(even) {
-  background-color: #e6ffe6;
+.btn-editar {
+  background: #007bff;
+  color: white;
 }
 
-/* Hover nas linhas */
-.tabela tbody tr:hover {
-  background-color: #ccffcc;
-  transition: 0.3s;
+.btn-editar:hover {
+  background: #0056d1;
 }
 
-/* Responsividade */
-@media screen and (max-width: 600px) {
-  .tabela thead {
-    display: none; /* esconde cabeçalho em telas pequenas */
-  }
-  .tabela, .tabela tbody, .tabela tr, .tabela td {
-    display: block;
-    width: 100%;
-  }
-  .tabela tr {
-    margin-bottom: 15px;
-    border: 2px solid #00b050;
+.btn-excluir {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-excluir:hover {
+  background: #a81f2a;
+}
+
+/* ===== PESQUISA E FILTRO ===== */
+.controle-tabela {
+  width: 95%;
+  max-width: 1100px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.controle-tabela input,
+.controle-tabela select {
+  padding: 10px 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #00b050;
+  outline: none;
+}
+
+.controle-tabela input {
+  width: 60%;
+}
+
+.controle-tabela input:focus,
+.controle-tabela select:focus {
+  border-color: #007a38;
+}
+
+/* ===== PAGINAÇÃO ===== */
+.paginacao {
+  display: flex;
+  justify-content: center;
+  margin: 25px 0;
+  gap: 10px;
+}
+
+.paginacao button {
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  background: #00b050;
+  color: white;
+  font-weight: bold;
+}
+
+.paginacao button:hover {
+  background: #008a3f;
+}
+
+.paginacao .ativo {
+  background: #005a2b;
+}
+/* ==== MODAL ===== */
+.modal {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-conteudo {
+    background: white;
+    padding: 30px;
+    width: 450px;
+    border-radius: 12px;
+    animation: aparecer .3s ease;
+}
+
+@keyframes aparecer {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.fechar {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.botoes-modal {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#btnSalvar {
+    background: #00b050;
+    color: white;
+    padding: 10px 20px;
     border-radius: 8px;
-    padding: 10px;
-  }
-  .tabela td {
-    text-align: right;
-    padding-left: 50%;
-    position: relative;
-  }
-  .tabela td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 10px;
-    width: 45%;
-    padding-left: 5px;
+    border: none;
+    cursor: pointer;
     font-weight: bold;
-    text-align: left;
-  }
+}
+
+#btnCancelar {
+    background: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+.exportar-container {
+    width: 95%;
+    max-width: 1100px;
+    margin: 20px auto 10px auto;
+    display: flex;
+    gap: 10px;
+}
+
+.exportar-container button {
+    padding: 10px 18px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.exportar-container button:hover {
+    background: #0056d1;
 }
