@@ -3,5 +3,13 @@ document.getElementById("btnExames").onclick = function() {
 };
 
 document.getElementById("btnAtestados").onclick = function () {
-  window.location.href = "../Paciente/Relatorio.html";
+  window.location.href = "../Paciente/Atestados/Atestado.html";
+};
+
+document.getElementById("btnMinhasConsultas").onclick = function () {
+  window.location.href = "../Paciente/MinhasConsultas/MinhasConsultas.html";
+};
+
+document.getElementById("btnAgendarConsultas").onclick = function () {
+  window.location.href = "../Paciente/AgendarConsultas/AgendarConsultas.html";
 };
