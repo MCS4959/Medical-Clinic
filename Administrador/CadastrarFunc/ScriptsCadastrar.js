@@ -1,181 +1,214 @@
-// ------------ CARREGAR DADOS DO localStorage AO ABRIR A PÁGINA -------------
+const modal = document.getElementById("modal");
+const abrirModal = document.getElementById("abrirModal");
+const fecharModal = document.getElementById("fecharModal");
+const formFuncionario = document.getElementById("formFuncionario");
+const tabela = document.querySelector("#tabelaFuncionarios tbody");
+const pesquisaInput = document.getElementById("pesquisa");
+const filtroCargo = document.getElementById("filtroCargo");
+const paginacao = document.getElementById("paginacao");
+
 let funcionarios = JSON.parse(localStorage.getItem("funcionarios")) || [];
+let paginaAtual = 1;
+const itensPorPagina = 5;
+
+// Abrir modal
+document.getElementById("abrirModal").addEventListener("click", () => {
+    let modal = document.getElementById("modal");
+    modal.style.display = "flex"; // 🔥 Agora sim centraliza
+  
+  
+
+  // Máscara automática para CPF
+document.getElementById("cpf").addEventListener("input", function (e) {
+    let valor = e.target.value.replace(/\D/g, "");
+    if (valor.length > 11) valor = valor.slice(0, 11);
+    valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+    valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+    valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    e.target.value = valor;
+  });
+// Máscara automática para data (DD/MM/AAAA)
+document.getElementById("nascimento").addEventListener("input", function (e) {
+    let valor = e.target.value.replace(/\D/g, "");
+    if (valor.length > 8) valor = valor.slice(0, 8);
+    valor = valor.replace(/(\d{2})(\d)/, "$1/$2");
+    valor = valor.replace(/(\d{2})(\d)/, "$1/$2");
+    e.target.value = valor;
+  });
+    
+});
+
+// Fechar modal
+document.getElementById("fecharModal").addEventListener("click", () => {
+    modal.style.display = "none";
+});
+
+// Salvar funcionário
+formFuncionario.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const funcionario = {
+    nome: document.getElementById("nome").value,
+    id: document.getElementById("id").value,
+    cpf: document.getElementById("cpf").value,
+    nasc: document.getElementById("nascimento").value,
+    cargo: document.getElementById("cargo").value,
+  };
+
+  funcionarios.push(funcionario);
+  salvar();
+  atualizarTabela();
+  modal.style.display = "none";
+  formFuncionario.reset();
+});
+
+// Salvar no LocalStorage
+function salvar() {
+  localStorage.setItem("funcionarios", JSON.stringify(funcionarios));
+}
+
+// Atualiza tabela
+function atualizarTabela() {
+  tabela.innerHTML = "";
+
+  const listaFiltrada = filtrarFuncionarios();
+  const start = (paginaAtual - 1) * itensPorPagina;
+  const end = start + itensPorPagina;
+  const pagina = listaFiltrada.slice(start, end);
+
+  pagina.forEach((func, index) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${func.nome}</td>
+      <td>${func.id}</td>
+      <td>${func.cpf}</td>
+      <td>${func.nasc}</td>
+      <td>${func.cargo}</td>
+      <td>
+        <button class="btn-editar" onclick="editar(${start + index})">Editar</button>
+        <button class="btn-excluir" onclick="excluir(${start + index})">Excluir</button>
+      </td>
+    `;
+    tabela.appendChild(tr);
+  });
+
+  gerarPaginacao(listaFiltrada.length);
+}
+
+// Excluir funcionário
+function excluir(index) {
+  if (confirm("Deseja excluir este funcionário?")) {
+    funcionarios.splice(index, 1);
+    salvar();
+    atualizarTabela();
+  }
+}
+
+// Editar funcionário
+function editar(index) {
+  const func = funcionarios[index];
+  
+  document.getElementById("nome").value = func.nome;
+  document.getElementById("id").value = func.id;
+  document.getElementById("cpf").value = func.cpf;
+  document.getElementById("nascimento").value = func.nasc;
+  document.getElementById("cargo").value = func.cargo;
+
+  modal.style.display = "block";
+
+  formFuncionario.onsubmit = function (e) {
+    e.preventDefault();
+    funcionarios[index] = {
+      nome: document.getElementById("nome").value,
+      id: document.getElementById("id").value,
+      cpf: document.getElementById("cpf").value,
+      nasc: document.getElementById("nascimento").value,
+      cargo: document.getElementById("cargo").value,
+    };
+    salvar();
+    atualizarTabela();
+    modal.style.display = "none";
+    formFuncionario.reset();
+    
+    // volta para modo adicionar
+    formFuncionario.onsubmit = null;
+  };
+}
+
+// Filtro e pesquisa
+function filtrarFuncionarios() {
+  const termo = pesquisaInput.value.toLowerCase();
+  const cargo = filtroCargo.value;
+
+  return funcionarios.filter((f) => {
+    const matchPesquisa =
+      f.nome.toLowerCase().includes(termo) ||
+      f.cpf.includes(termo) ||
+      f.id.includes(termo);
+
+    const matchCargo = cargo === "" || f.cargo === cargo;
+    return matchPesquisa && matchCargo;
+  });
+}
+
+// Paginação
+function gerarPaginacao(total) {
+  paginacao.innerHTML = "";
+  const totalPaginas = Math.ceil(total / itensPorPagina);
+
+  for (let i = 1; i <= totalPaginas; i++) {
+    const btn = document.createElement("button");
+    btn.textContent = i;
+    btn.classList.toggle("ativo", i === paginaAtual);
+    btn.addEventListener("click", () => {
+      paginaAtual = i;
+      atualizarTabela();
+    });
+    paginacao.appendChild(btn);
+  }
+}
+
+// Eventos de busca e filtro
+pesquisaInput.addEventListener("input", atualizarTabela);
+filtroCargo.addEventListener("change", atualizarTabela);
+
+// Inicialização
 atualizarTabela();
 
-// ------------ ABRIR / FECHAR MODAL -------------
-document.getElementById("abrirModal").onclick = () => abrirModal();
-document.getElementById("fecharModal").onclick = () => fecharModal();
-document.getElementById("btnCancelar").onclick = () => fecharModal();
-
-function abrirModal() {
-    document.getElementById("modal").style.display = "flex";
-}
-
-function fecharModal() {
-    document.getElementById("modal").style.display = "none";
-    document.getElementById("formFuncionario").reset();
-    editIndex = null; // limpa modo edição
-}
-
-// ----------- SALVAR FUNCIONÁRIO ------ (NOVO OU EDITADO) -------------
-let editIndex = null;
-
-document.getElementById("formFuncionario").addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    let funcionario = {
-        nome: document.getElementById("nome").value,
-        id: document.getElementById("id").value,
-        cpf: document.getElementById("cpf").value,
-        nasc: document.getElementById("nascimento").value,
-        cargo: document.getElementById("cargo").value
-    };
-
-    if (editIndex === null) {
-        funcionarios.push(funcionario); // adiciona novo
-    } else {
-        funcionarios[editIndex] = funcionario; // salva edição
+// Botão cancelar modal
+document.getElementById("cancelarModal").addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+  
+  // Fechar ao clicar fora do modal
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
     }
+  });
+  
+  // Alternar entre tema claro / escuro
+document.getElementById("toggleDark").addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+  });
 
-    salvarLocal();
-    atualizarTabela();
-    fecharModal();
-});
-
-// --------------- ATUALIZA TABELA NA TELA ---------------
-function atualizarTabela() {
-    let tbody = document.querySelector("#tabelaFuncionarios tbody");
-    tbody.innerHTML = "";
-
-    funcionarios.forEach((f, i) => {
-        let linha = `
-            <tr>
-                <td>${f.nome}</td>
-                <td>${f.id}</td>
-                <td>${f.cpf}</td>
-                <td>${f.nasc}</td>
-                <td>${f.cargo}</td>
-                <td>
-                    <button class="btn-editar" onclick="editar(${i})">Editar</button>
-                    <button class="btn-excluir" onclick="excluir(${i})">Excluir</button>
-                </td>
-            </tr>
-        `;
-        tbody.innerHTML += linha;
-    });
-}
-
-// --------------- EXCLUIR FUNCIONÁRIO ---------------
-function excluir(index) {
-    if (confirm("Tem certeza que deseja excluir este funcionário?")) {
-        funcionarios.splice(index, 1);
-        salvarLocal();
-        atualizarTabela();
-    }
-}
-
-// --------------- EDITAR FUNCIONÁRIO ----------------
-function editar(index) {
-    let f = funcionarios[index];
-
-    document.getElementById("nome").value = f.nome;
-    document.getElementById("id").value = f.id;
-    document.getElementById("cpf").value = f.cpf;
-    document.getElementById("nascimento").value = f.nasc;
-    document.getElementById("cargo").value = f.cargo;
-
-    editIndex = index;
-    abrirModal();
-}
-
-// --------------- SALVAR NO localStorage ---------------
-function salvarLocal() {
-    localStorage.setItem("funcionarios", JSON.stringify(funcionarios));
-}
-// =================== BUSCA INTELIGENTE ===================
-document.getElementById("pesquisa").addEventListener("input", function () {
-    let termo = this.value.toLowerCase();
-
-    let linhas = document.querySelectorAll("#tabelaFuncionarios tbody tr");
-
-    linhas.forEach(tr => {
-        let texto = tr.innerText.toLowerCase();
-        tr.style.display = texto.includes(termo) ? "" : "none";
-    });
-});
-// =================== PAGINAÇÃO ===================
-let paginaAtual = 1;
-let itensPorPagina = 10;
-
-function atualizarTabela() {
-    let tbody = document.querySelector("#tabelaFuncionarios tbody");
-    tbody.innerHTML = "";
-
-    // cálculo da página
-    let inicio = (paginaAtual - 1) * itensPorPagina;
-    let fim = inicio + itensPorPagina;
-
-    let pagina = funcionarios.slice(inicio, fim);
-
-    pagina.forEach((f, i) => {
-        let linha = `
-        <tr>
-            <td>${f.nome}</td>
-            <td>${f.id}</td>
-            <td>${f.cpf}</td>
-            <td>${f.nasc}</td>
-            <td>${f.cargo}</td>
-            <td>
-                <button class="btn-editar" onclick="editar(${i + inicio})">Editar</button>
-                <button class="btn-excluir" onclick="excluir(${i + inicio})">Excluir</button>
-            </td>
-        </tr>`;
-        tbody.innerHTML += linha;
-    });
-
-    gerarPaginacao();
-}
-
-// Criar botões inferiores
-function gerarPaginacao() {
-    let totalPaginas = Math.ceil(funcionarios.length / itensPorPagina);
-
-    let divPag = document.getElementById("paginacao");
-    divPag.innerHTML = "";
-
-    for (let i = 1; i <= totalPaginas; i++) {
-        let botao = document.createElement("button");
-        botao.innerText = i;
-        botao.onclick = () => { paginaAtual = i; atualizarTabela(); }
-
-        if (i === paginaAtual) botao.classList.add("ativo");
-        divPag.appendChild(botao);
-    }
-}
-document.getElementById("exportarPDF").addEventListener("click", function () {
-    let win = window.open("", "_blank");
-    win.document.write("<h1>Lista de Funcionários</h1><br>");
-
-    funcionarios.forEach(f => {
-        win.document.write(
-            `<p><b>Nome:</b> ${f.nome} — <b>ID:</b> ${f.id} — <b>CPF:</b> ${f.cpf} — <b>Nasc:</b> ${f.nasc} — <b>Cargo:</b> ${f.cargo}</p>`
-        );
-    });
-
-    win.print();
-    win.close();
-});
-document.getElementById("exportarExcel").addEventListener("click", function () {
-
-    let conteudo = "Nome\tID\tCPF\tNascimento\tCargo\n";
-
-    funcionarios.forEach(f => {
-        conteudo += `${f.nome}\t${f.id}\t${f.cpf}\t${f.nasc}\t${f.cargo}\n`;
-    });
-
-    let blob = new Blob([conteudo], { type: "application/vnd.ms-excel" });
+  document.getElementById("exportExcel").addEventListener("click", () => {
+    let tabela = document.getElementById("tabelaFuncionarios");
+    let html = tabela.outerHTML;
+  
     let link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "funcionarios.xls";
+    link.href = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
+    link.download = 'funcionarios.xls';
     link.click();
-});
+  });
+
+  document.getElementById("exportPDF").addEventListener("click", () => {
+    const win = window.open("", "_blank");
+    win.document.write("<html><head><title>Funcionários</title></head><body>");
+    win.document.write(document.getElementById("tabelaFuncionarios").outerHTML);
+    win.document.write("</body></html>");
+    win.document.close();
+    win.print();
+  });
+  
+  
