@@ -27,15 +27,6 @@ document.getElementById("cpf").addEventListener("input", function (e) {
     valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
     e.target.value = valor;
   });
-// Máscara automática para data (DD/MM/AAAA)
-document.getElementById("nascimento").addEventListener("input", function (e) {
-    let valor = e.target.value.replace(/\D/g, "");
-    if (valor.length > 8) valor = valor.slice(0, 8);
-    valor = valor.replace(/(\d{2})(\d)/, "$1/$2");
-    valor = valor.replace(/(\d{2})(\d)/, "$1/$2");
-    e.target.value = valor;
-  });
-    
 });
 
 // Fechar modal
@@ -51,7 +42,7 @@ formFuncionario.addEventListener("submit", (e) => {
     nome: document.getElementById("nome").value,
     id: document.getElementById("id").value,
     cpf: document.getElementById("cpf").value,
-    nasc: document.getElementById("nascimento").value,
+    nasc: formatarDataBR(document.getElementById("nascimento").value),
     cargo: document.getElementById("cargo").value,
   };
 
@@ -61,6 +52,13 @@ formFuncionario.addEventListener("submit", (e) => {
   modal.style.display = "none";
   formFuncionario.reset();
 });
+
+function formatarDataBR(dataISO) {
+  if (!dataISO) return "";
+  const partes = dataISO.split("-");
+  return `${partes[2]}/${partes[1]}/${partes[0]}`;
+}
+
 
 // Salvar no LocalStorage
 function salvar() {
@@ -111,7 +109,11 @@ function editar(index) {
   document.getElementById("nome").value = func.nome;
   document.getElementById("id").value = func.id;
   document.getElementById("cpf").value = func.cpf;
-  document.getElementById("nascimento").value = func.nasc;
+  document.getElementById("nascimento").value = formatarDataInput(func.nasc);
+  function formatarDataInput(dataBR) {
+  const partes = dataBR.split("/");
+  return `${partes[2]}-${partes[1]}-${partes[0]}`;
+}
   document.getElementById("cargo").value = func.cargo;
 
   modal.style.display = "block";
@@ -191,24 +193,4 @@ document.getElementById("cancelarModal").addEventListener("click", () => {
 document.getElementById("toggleDark").addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
   });
-
-  document.getElementById("exportExcel").addEventListener("click", () => {
-    let tabela = document.getElementById("tabelaFuncionarios");
-    let html = tabela.outerHTML;
-  
-    let link = document.createElement("a");
-    link.href = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
-    link.download = 'funcionarios.xls';
-    link.click();
-  });
-
-  document.getElementById("exportPDF").addEventListener("click", () => {
-    const win = window.open("", "_blank");
-    win.document.write("<html><head><title>Funcionários</title></head><body>");
-    win.document.write(document.getElementById("tabelaFuncionarios").outerHTML);
-    win.document.write("</body></html>");
-    win.document.close();
-    win.print();
-  });
-  
   
