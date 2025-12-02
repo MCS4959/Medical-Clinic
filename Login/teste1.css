@@ -8,7 +8,7 @@
 
 /* Fundo */
 body {
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  background: linear-gradient(135deg, #11cb49, #2575fc);
   height: 100vh;
   display: flex;
   align-items: center;
@@ -44,8 +44,8 @@ body {
 }
 
 .tab.active {
-  color: #d1006c;
-  border-bottom: 3px solid #d1006c;
+  color: #000000;
+  border-bottom: 3px solid #000000;
 }
 
 #message {
@@ -68,7 +68,7 @@ body {
 
 .form h2 {
   margin-bottom: 20px;
-  color: #d1006c;
+  color: #000000;
   font-size: 18px;
 }
 
