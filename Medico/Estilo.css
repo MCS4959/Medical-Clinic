@@ -97,3 +97,32 @@ body {
   text-align: center;
   color: #000;
 }
+
+.usuario-menu {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  right: 30px;
+  top: 60px;
+  width: 150px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.usuario-menu p {
+  margin: 0;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.usuario-menu p:hover {
+  background-color: #eee;
+}
+
+.oculto {
+  display: none !important;
+}
