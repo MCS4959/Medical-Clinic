@@ -1,0 +1,131 @@
+<ui:composition
+  template="/WEB-INF/template/LayoutPadrao.xhtml"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://xmlns.jcp.org/jsf/html"
+  xmlns:f="http://xmlns.jcp.org/jsf/core"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui">
+  
+  <ui:define name="titulo">Teste</ui:define>
+  
+  <ui:define name="corpo">
+  
+	<h:form id="formulario">
+
+		<h1>TESTE</h1>
+
+		<p:growl id="growl" showDetail="false" />
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton icon="pi pi-plus" value="Novo" id="botaoNovo" 
+						oncomplete="PF('editarDialogWidgetVar').show()"
+		            	update="editarDialog"	
+						ctionListener="#{manterAlunoBean.limpar}"	            	
+		            	process="@this"/>
+				</p:toolbarGroup>
+			</p:toolbar>
+			
+			<p:dataTable id="disciplinasTable" var="disciplina" value="#{manterDisciplinaBean.disciplinas}"
+				lazy="false" showGridlines="true"
+	    		style="margin-top: 20px" emptyMessage="Nenhuma disciplina encontrado." rows="10"
+	    		paginator="true" paginatorAlwaysVisible="true" paginatorPosition="bottom"
+	    		rowsPerPageTemplate="5,10,15">		
+
+				<p:column headerText="Id">
+					<h:outputText value="#{disciplina.id}" />
+				</p:column>	
+
+				<p:column headerText="Nome"
+					filterBy="#{disciplina.nome}" sortBy="#{disciplina.nome}">
+					<h:outputText value="#{disciplina.nome}" />
+				</p:column>	
+
+				<p:column headerText="Sigla"
+					filterBy="#{disciplina.sigla}" sortBy="#{disciplina.sigla}">
+					<h:outputText value="#{disciplina.sigla}" />
+				</p:column>				
+
+
+				<p:column headerText="Curso">
+					<h:outputText value="#{disciplina.curso.sigla}" />
+				</p:column>	
+
+				<p:column headerText="Operações">					
+					
+					<p:commandButton id="cb1" icon="pi pi-pencil" title="Editar"	    				
+		            	oncomplete="PF('editarDialogWidgetVar').show()"
+		            	update=":formulario:editarDialog"		            	
+		            	process="@this">
+		            	<f:setPropertyActionListener target="#{manterDisciplinaBean.disciplina}" 
+							value="#{disciplina}" />
+	            	</p:commandButton>
+
+					<p:commandButton icon="pi pi-trash"  title="Excluir"
+						onclick="PF('confirmacaoExclusao').show();"
+						process="@this"	>
+						<f:setPropertyActionListener target="#{manterDisciplinaBean.disciplina}"
+							value="#{disciplina}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+
+
+
+	<p:dialog id="editarDialog" header="Disciplina" widgetVar="editarDialogWidgetVar"
+				modal="true" resizable="true" closeOnEscape="true"
+				showEffect="explode" hideEffect="explode" 
+				width="100%" position="center top" maximizable="true"
+				height="70%" fitViewport="true" responsive="true">
+
+		<p:panelGrid id="grid" columns="2">
+
+			<p:outputLabel for="id" value="Id: " />
+			<p:outputLabel id="id" value="#{manterDisciplinaBean.disciplina.id}" />
+
+			<p:outputLabel for="sigla" value="Sigla: " />
+			<p:inputText id="sigla" value="#{manterDisciplinaBean.disciplina.sigla}" 
+			  required="true"/>
+
+			<p:outputLabel for="qdeSemestres" value="nome: " />
+			<p:inputText id="qdeSemestres" value="#{manterDisciplinaBean.disciplina.nome}" 
+			  required="true"/>
+
+
+			  <p:outputLabel for="cur" value="Curso: " />
+			<p:selectOneMenu id="cur" value="#{manterDisciplinaBean.disciplina.curso}" >
+				<f:selectItem itemLabel="Selecione um curso"/>
+				<f:selectItems value="#{manterDisciplinaBean.cursos}"
+					var="curso" itemLabel="#{curso.sigla}"
+					itemValue="#{curso}"/>
+			</p:selectOneMenu>
+
+			<p:commandButton icon="pi pi-save" id="salvarButton"
+				value="Salvar" title="Grava dados da disciplina"
+				actionListener="#{manterDisciplinaBean.salvar}"
+				oncomplete="if (!args.validationFailed) PF('editarDialogWidgetVar').hide()"
+				update="growl disciplinasTable" process="@this grid">
+			</p:commandButton>						
+			
+		</p:panelGrid>
+
+	</p:dialog>
+	
+	<p:confirmDialog id="confirmacaoExclusaoDialog"
+				widgetVar="confirmacaoExclusao"
+				message="Tem certeza que deseja excluir o curso #{manterAlçunoBean.disciplina.sigla}?"
+				header="Exclusão de usuário" severity="alert">
+				<p:button icon="pi pi-thumbs-down" value="Não"
+					onclick="PF('confirmacaoExclusao').hide(); return false;" 
+					process="@this"/>
+				<p:commandButton icon="pi pi-thumbs-up" value="Sim" 
+				    update=":formulario:disciplinasTable"
+					onclick="PF('confirmacaoExclusao').hide();"
+					action="#{manterDisciplinaBean.excluir}"
+					process="@this"/>
+			</p:confirmDialog>	
+
+	</h:form>
+  </ui:define>
+</ui:composition>
