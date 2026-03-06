@@ -1,0 +1,34 @@
+# --- Java / Maven ---
+mcweb/target/
+*.class
+*.jar
+*.war
+*.ear
+
+# --- IDEs ---
+# IntelliJ
+.idea/
+*.iml
+*.iws
+
+# Eclipse
+.settings/
+.project
+.classpath
+.metadata/
+
+# VS Code
+.vscode/
+
+# --- Sistemas Operacionais ---
+.DS_Store
+Thumbs.db
+
+# --- Logs e Arquivos temporários ---
+*.log
+*.tmp
+temp/
+
+# --- JSF / JS (se aplicável) ---
+node_modules/
+dist/

@@ -1,0 +1,405 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #fff;
+}
+
+/* ===== CABEÇALHO ===== */
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #d9d9d9;
+  padding: 10px 30px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icone-logo {
+  width: 150px;
+  height: 150px;
+}
+
+.texto-logo {
+  font-weight: bold;
+  color: #00b050;
+  line-height: 1;
+}
+
+.texto-logo .medic {
+  font-size: 20px;
+}
+
+.texto-logo .clinic {
+  font-size: 18px;
+}
+
+.titulo {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.icone-usuario img {
+  width: 45px;
+  height: 45px;
+  border: 2px solid black;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f5f5;
+}
+
+/* ===== CABEÇALHO ===== */
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #d9d9d9;
+  padding: 10px 30px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icone-logo {
+  width: 50px;
+  height: 50px;
+  background-color: #00b050;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.texto-logo {
+  font-weight: bold;
+  color: #00b050;
+  line-height: 1.2;
+}
+
+.titulo {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* ===== CONTEÚDO ===== */
+.conteudo {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - 90px);
+  padding: 30px 10px;
+}
+
+.container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  max-width: 600px;
+  width: 100%;
+}
+
+h2 {
+  color: #00b050;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+select, input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+}
+
+select:focus, input:focus {
+  outline: none;
+  border-color: #00b050;
+  box-shadow: 0 0 5px rgba(0, 176, 80, 0.3);
+}
+
+/* ===== CALENDÁRIO ===== */
+.calendario-container {
+  display: none;
+  margin-top: 30px;
+}
+
+.calendario-container.ativo {
+  display: block;
+}
+
+.calendario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.mes-ano {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.btn-mes {
+  background-color: #00b050;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.btn-mes:hover {
+  background-color: #009640;
+}
+
+.dias-semana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.dia-semana {
+  text-align: center;
+  font-weight: bold;
+  color: #666;
+  padding: 10px 0;
+  font-size: 12px;
+}
+
+.dias {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.dia {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.dia:hover:not(.desabilitado) {
+  background-color: #e6ffe6;
+  border-color: #00b050;
+}
+
+.dia.disponivel {
+  background-color: #e6ffe6;
+  border-color: #00b050;
+  cursor: pointer;
+}
+
+.dia.selecionado {
+  background-color: #00b050;
+  color: white;
+  border-color: #00b050;
+}
+
+.dia.desabilitado {
+  background-color: #f0f0f0;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.dia.outro-mes {
+  color: #ccc;
+  background-color: transparent;
+  border-color: transparent;
+  cursor: default;
+}
+
+/* ===== FORMULÁRIO PACIENTE ===== */
+.formulario-paciente {
+  display: none;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #ddd;
+}
+
+.formulario-paciente.ativo {
+  display: block;
+}
+
+/* ===== HORÁRIOS ===== */
+.horarios-container {
+  display: none;
+  margin-top: 20px;
+}
+
+.horarios-container.ativo {
+  display: block;
+}
+
+.horarios-label {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.horarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+}
+
+.btn-horario {
+  padding: 10px;
+  border: 1px solid #00b050;
+  background-color: white;
+  color: #00b050;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.btn-horario:hover {
+  background-color: #e6ffe6;
+}
+
+.btn-horario.selecionado {
+  background-color: #00b050;
+  color: white;
+}
+
+/* ===== BOTÕES ===== */
+.btn-agendar {
+  width: 100%;
+  padding: 12px;
+  background-color: #00b050;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.btn-agendar:hover:not(:disabled) {
+  background-color: #009640;
+}
+
+.btn-agendar:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-cancelar {
+  width: 100%;
+  padding: 12px;
+  background-color: #999;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.btn-cancelar:hover {
+  background-color: #777;
+}
+
+/* ===== MENSAGENS ===== */
+.mensagem {
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  display: none;
+}
+
+.mensagem.sucesso {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
+  display: block;
+}
+
+.mensagem.erro {
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+  display: block;
+}
+
+.resumo-agendamento {
+  background-color: #e6ffe6;
+  padding: 15px;
+  border-radius: 4px;
+  margin-top: 20px;
+  border-left: 4px solid #00b050;
+}
+
+.resumo-agendamento h3 {
+  color: #00b050;
+  margin-bottom: 10px;
+}
+
+.resumo-agendamento p {
+  margin: 5px 0;
+  color: #333;
+}
+
+@media screen and (max-width: 600px) {
+  .cabecalho {
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+  }
+
+  .container {
+      padding: 20px;
+  }
+
+  .horarios-grid {
+      grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  }
+}
