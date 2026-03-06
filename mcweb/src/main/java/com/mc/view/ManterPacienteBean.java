@@ -23,7 +23,7 @@ import lombok.extern.log4j.Log4j;
 @Setter
 @Named
 @ViewScoped
-public class ManterCursoBean implements Serializable{
+public class ManterPacienteBean implements Serializable{
 	
 	/**
 	 * 
