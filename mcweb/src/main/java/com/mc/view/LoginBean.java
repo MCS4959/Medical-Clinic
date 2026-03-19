@@ -39,6 +39,12 @@ public class LoginBean implements Serializable{
 	
 	@PostConstruct
 	public void inicializar() {
+FacesContext.getCurrentInstance().
+        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+        		"Login realizado com sucesso!", 
+        		usuario.toString()));
+		
+		log.info("usuario: " + usuario.toString());		usuario = new Usuario();
 		log.info("init pesquisa"); 		
 
 	}
@@ -50,19 +56,20 @@ public class LoginBean implements Serializable{
 
 		// buscar o usuario por email e comparar a senha
 		if(usuarioService.autenticar(usuario)){
-			// autenticado
-		}
-		else{
-			// nao autenticado
-		}
-	
-
 		FacesContext.getCurrentInstance().
-        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+		addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
         		"Login realizado com sucesso!", 
         		usuario.toString()));
-		
 		log.info("usuario: " + usuario.toString());
+					}
+		else{
+			// nao autenticado
+			FacesContext.getCurrentInstance().
+	        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+	        		"Login falhou!", 
+	        		"Email ou senha incorretos"));
+		}
+	
 	}
 	
 	

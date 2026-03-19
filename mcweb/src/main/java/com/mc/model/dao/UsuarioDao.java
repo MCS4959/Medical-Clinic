@@ -17,9 +17,11 @@ public class UsuarioDao implements Serializable{
 	private EntityManager manager;
 
 	public Usuario buscarPorEmail(String email){
-		// fazer a busca
-		manager.find(null, email);
-		return null;
+		try {
+			return manager.createQuery("SELECT u FROM Usuario u WHERE u.email = :email", Usuario.class)
+					.setParameter("email", email)
+					.getSingleResult();
+		} catch (Exception e) {
+			return null;}
 	}
-	
 }

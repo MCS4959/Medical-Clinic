@@ -26,7 +26,7 @@ public class UsuarioService implements Serializable{
 	public boolean autenticar(Usuario usuario){
 
 		Usuario usuario_db = buscarPorEmail(usuario.getEmail());
-		if(usuario.getSenha().equals(usuario_db.getSenha())){
+		if(usuario_db != null && usuario_db.getSenha().equals(usuario.getSenha())){
 			// buscar o usuario por email e comparar a senha
 			log.info(usuario_db.toString() + " logado");
 			return true;
