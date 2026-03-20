@@ -16,62 +16,49 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
-
 @Log4j
 @Getter
 @Setter
 @Named
 @ViewScoped
-public class LoginBean implements Serializable{
-	
+public class LoginBean implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private UsuarioService usuarioService;
 
-	private Usuario usuario;
-	
-	
+	private Usuario usuario = new Usuario();
 
-	
 	@PostConstruct
 	public void inicializar() {
-FacesContext.getCurrentInstance().
-        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-        		"Login realizado com sucesso!", 
-        		usuario.toString()));
-		
-		log.info("usuario: " + usuario.toString());		usuario = new Usuario();
-		log.info("init pesquisa"); 		
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Login realizado com sucesso!", usuario.toString()));
+
+		log.info("usuario: " + usuario.toString());
+		usuario = new Usuario();
+		log.info("init pesquisa");
 
 	}
-	
 
 	/* */
-	public void Login() {
+	public void login() {
 		log.info(usuario.toString());
 
 		// buscar o usuario por email e comparar a senha
-		if(usuarioService.autenticar(usuario)){
-		FacesContext.getCurrentInstance().
-		addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-        		"Login realizado com sucesso!", 
-        		usuario.toString()));
-		log.info("usuario: " + usuario.toString());
-					}
-		else{
+		if (usuarioService.autenticar(usuario)) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Login realizado com sucesso!", usuario.toString()));
+			log.info("usuario: " + usuario.toString());
+		} else {
 			// nao autenticado
-			FacesContext.getCurrentInstance().
-	        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-	        		"Login falhou!", 
-	        		"Email ou senha incorretos"));
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login falhou!", "Email ou senha incorretos"));
 		}
-	
+
 	}
-	
-	
-	
+
 }
