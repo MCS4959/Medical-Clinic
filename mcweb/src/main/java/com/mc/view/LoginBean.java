@@ -43,18 +43,30 @@ public class LoginBean implements Serializable {
 		log.info("init pesquisa");
 
 	}
+	
+	public void salvar() {
+		log.info(usuario.toString());
+		usuarioService.salvar(usuario);
+		
+		FacesContext.getCurrentInstance().
+        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+        		"O usuario foi gravado com sucesso!", 
+        		usuario.toString()));
+		
+		log.info("usario: " + usuario.toString());
+	}
+	
 
 	/* */
 	public void login() {
 		log.info(usuario.toString());
 
-		// buscar o usuario por email e comparar a senha
 		if (usuarioService.autenticar(usuario)) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Login realizado com sucesso!", usuario.toString()));
 			log.info("usuario: " + usuario.toString());
 		} else {
-			// nao autenticado
+			/*nao autenticado*/
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login falhou!", "Email ou senha incorretos"));
 		}

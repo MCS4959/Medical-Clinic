@@ -1,0 +1,49 @@
+<ui:composition
+  template="/WEB-INF/template/LayoutPadrao.xhtml"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://xmlns.jcp.org/jsf/html"
+  xmlns:f="http://xmlns.jcp.org/jsf/core"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui">
+  
+  <ui:define name="titulo">Teste</ui:define>
+  
+  <ui:define name="corpo">
+    <h:form>
+        <p:messages id="msgs"/>
+				<!-- vou pegar de exemplo o codigo de login e fazer o cadastro por cima -->
+        <h:panelGrid columns="1" cellpadding="2" styleClass="mb-3">
+        
+        	<p:outputLabel for="nome" value="Nome: "/> <!-- caixa de texto para nome -->
+            <p:inputText id="nome" value="#{loginBean.usuario.nome}" required="true">
+                <f:validateLength minimum="3"/>
+            </p:inputText>
+            
+            <p:outputLabel for="firstname" value="Email: "/> <!-- caixa de texto para email -->
+            <p:inputText id="firstname" value="#{loginBean.usuario.email}" required="true" label="Firstname">
+                <f:validateLength minimum="2"/>
+            </p:inputText>
+            <p:message for="firstname" display="icon"/>
+
+            <p:outputLabel for="senha" value="Senha: "/> <!-- caixa de texto para senha -->
+            <p:password id="senha" value="#{loginBean.usuario.senha}" required="true">
+            	 <f:validateLength minimum="2"/>
+           	 </p:password>
+           	 
+             <div class="field col-12 md:col-4"> <!-- caixa de texto para o numero, está com uma mascara para se adaptar -->
+            	<p:outputLabel for="telefone" value="Telefone: " />
+            	<p:inputMask id="telefone" value="#{loginBean.usuario.telefone}" mask="(99) 99999-9999" validateMask="true" />
+        	</div>
+        	
+        	<p:commandButton value="Save" 
+        	update="msgs" process="@form" 
+        	actionListener="#{LoginBean.salvar}" 
+        	icon= "pi pi-save"/>
+        	
+        	<p:button value="Ir para login" outcome="/index.xhtml"/>
+        	 
+        </h:panelGrid>
+    </h:form>
+</ui:define>
+  
+</ui:composition>

@@ -18,6 +18,10 @@ public class UsuarioService implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Inject	
 	private UsuarioDao usuarioDao;
+	
+	public void salvar(Usuario usuario) {
+		usuarioDao.salvar(usuario);
+	}
 
 	public Usuario buscarPorEmail(String email){
 		return usuarioDao.buscarPorEmail(email);
@@ -27,7 +31,6 @@ public class UsuarioService implements Serializable{
 
 		Usuario usuario_db = buscarPorEmail(usuario.getEmail());
 		if(usuario_db != null && usuario_db.getSenha().equals(usuario.getSenha())){
-			// buscar o usuario por email e comparar a senha
 			log.info(usuario_db.toString() + " logado");
 			return true;
 		}
