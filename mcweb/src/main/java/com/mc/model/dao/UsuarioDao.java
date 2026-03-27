@@ -33,6 +33,7 @@ public class UsuarioDao implements Serializable{
 	 * 
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(UsuarioDao.class);
+	
 	@Transactional
 	public Usuario salvar(Usuario usuario) throws PersistenceException {
 		
@@ -40,6 +41,7 @@ public class UsuarioDao implements Serializable{
 		
 		try {
 			return manager.merge(usuario);
+			
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw e;

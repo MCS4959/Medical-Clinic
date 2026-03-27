@@ -30,6 +30,7 @@ public class Usuario implements Serializable{
 
     private String email;
     private String senha;
+    @ToString.Include	
     private String nome;
     private String telefone;
     
