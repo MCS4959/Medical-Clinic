@@ -1,0 +1,31 @@
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            background: linear-gradient(135deg, #141e30, #243b55);
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 350px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        #footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            background: transparent;
+            box-shadow: none;
+        }
