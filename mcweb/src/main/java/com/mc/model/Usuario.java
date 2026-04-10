@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.mc.model.enums.Perfil;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,5 +35,7 @@ public class Usuario implements Serializable{
     @ToString.Include	
     private String nome;
     private String telefone;
+    private Perfil perfil;
+    private String crm;
     
 }
