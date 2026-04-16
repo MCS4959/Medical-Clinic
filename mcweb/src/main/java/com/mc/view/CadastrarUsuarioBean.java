@@ -1,6 +1,9 @@
 package com.mc.view;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -10,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.mc.model.Usuario;
+import com.mc.model.enums.Perfil;
 import com.mc.service.UsuarioService;
 
 import lombok.Getter;
@@ -32,12 +36,14 @@ public class CadastrarUsuarioBean implements Serializable {
 	private UsuarioService usuarioService;
 
 	private Usuario usuario = new Usuario();
+	private List<Perfil> perfis = Arrays.asList(Perfil.values());
 
 
 	@PostConstruct
 	public void inicializar() {		
 
 		log.info("init pesquisa");
+		
 	}
 	
 	public void salvar() {
@@ -49,8 +55,13 @@ public class CadastrarUsuarioBean implements Serializable {
         addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
         		"O usuario foi gravado com sucesso!", 
         		usuario.toString()));
-		
+		limpar();
 		log.info("usuario: " + usuario.toString());
 	}	
+	
+	public void limpar() {
+
+		this.usuario = new Usuario();
+	}
 
 }
