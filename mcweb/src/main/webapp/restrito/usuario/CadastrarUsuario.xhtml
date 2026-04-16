@@ -13,7 +13,17 @@
     <h:form>
         <p:messages id="msgs"/>
 
-       <p:panelGrid id="grid" columns="2">
+       <p:panelGrid id="grid" columns="2">       
+       		
+       		<p:outputLabel for="perfil" value="Perfil: " />
+				<p:selectOneMenu id="perfil" value="#{cadastrarUsuarioBean.usuario.perfil}">
+					<f:selectItem itemLabel="Selecione um perfil"/>
+					<f:selectItems value="#{cadastrarUsuarioBean.perfis}"
+						var="perfil" itemLabel="#{perfil}"
+						itemValue="#{perfil}"
+						/>
+					<p:ajax update="grid" process="@this"/>
+				</p:selectOneMenu>
         
         	<p:outputLabel for="nome" value="Nome: "/>
             <p:inputText id="nome" value="#{cadastrarUsuarioBean.usuario.nome}" required="true"/>
@@ -29,24 +39,12 @@
            	<p:inputMask id="telefone" value="#{cadastrarUsuarioBean.usuario.telefone}" mask="(99) 99999-9999" validateMask="true" />
            	
         	<p:outputLabel for="crm" value="Crm: " rendered="#{cadastrarUsuarioBean.usuario.perfil eq 'MEDICO'}" />
-			<p:inputText id="crm" value="#{cadastrarUsuarioBean.usuario.crm}" required="true" rendered="#{cadastrarUsuarioBean.usuario.perfil eq 'MEDICO'}" mask="999999/aa"/>
-        	
-        	<p:outputLabel for="perfil" value="Perfil: " />
-			<p:selectOneMenu id="perfil" value="#{cadastrarUsuarioBean.usuario.perfil}">
-				<f:selectItem itemLabel="Selecione um perfil"/>
-				<f:selectItems value="#{cadastrarUsuarioBean.perfis}"
-					var="perfil" itemLabel="#{perfil}"
-					itemValue="#{perfil}"
-					/>
-				<p:ajax update="grid" process="@this"/>
-			</p:selectOneMenu>
-			
+			<p:inputMask id="crm" value="#{cadastrarUsuarioBean.usuario.crm}" required="true" rendered="#{cadastrarUsuarioBean.usuario.perfil eq 'MEDICO'}" mask="999999/aa" placeHolder="000000/UF" validateMask="true"/>
            	
-			
-        	
         	<p:commandButton value="Save" 
-	        	update="msgs" process="@form" 
-	        	actionListener="#{cadastrarUsuarioBean.salvar}" icon= "pi pi-save"/>
+	        	update="msgs" process="@this grid" 
+	        	actionListener="#{cadastrarUsuarioBean.salvar}" icon= "pi pi-save"
+	        	oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000);"/>
         	
         	
         	 
