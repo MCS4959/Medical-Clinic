@@ -55,8 +55,13 @@ public class CadastrarUsuarioBean implements Serializable {
         addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
         		"O usuario foi gravado com sucesso!", 
         		usuario.toString()));
-		
+		limpar();
 		log.info("usuario: " + usuario.toString());
 	}	
+	
+	public void limpar() {
+
+		this.usuario = new Usuario();
+	}
 
 }
