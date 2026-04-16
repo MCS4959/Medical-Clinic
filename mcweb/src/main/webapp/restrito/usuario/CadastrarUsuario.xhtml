@@ -42,7 +42,7 @@
 			<p:inputMask id="crm" value="#{cadastrarUsuarioBean.usuario.crm}" required="true" rendered="#{cadastrarUsuarioBean.usuario.perfil eq 'MEDICO'}" mask="999999/aa" placeHolder="000000/UF" validateMask="true"/>
            	
         	<p:commandButton value="Save" 
-	        	update="msgs" process="@this grid" 
+	        	update="msgs grid" process="@this grid" 
 	        	actionListener="#{cadastrarUsuarioBean.salvar}" icon= "pi pi-save"
 	        	oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000);"/>
         	
