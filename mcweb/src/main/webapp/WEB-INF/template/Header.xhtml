@@ -18,10 +18,18 @@
 							<f:facet name="start">
 							<p:graphicImage name="logo_mcweb.png" library="imagens" style="width: 80px;  border-radius:50%;" styleClass="mb-3"/>
 							</f:facet>
-							<p:menuitem value="Home" url="http://localhost:8080/mcweb"/>	
-							<p:menuitem icon="pi pi-sparkles" value="Usuario" outcome="/restrito/usuario/CadastrarUsuario.xhtml" />						
+							<p:menuitem value="Home" url="http://localhost:8080/mcweb" />	
+							<p:menuitem icon="pi pi-sparkles" value="Usuario" outcome="/restrito/usuario/CadastrarUsuario.xhtml" rendered="#{loginBean.usuario.perfil eq 'ADMIN' or loginBean.usuario.perfil eq 'ATENDENTE'}"/>						
 							<p:divider layout="vertical"/>
 							<p:menuitem value="Sair" icon="pi pi-fw pi-power-off" actionListener="#{loginBean.sair}"/> 
+							<f:facet name="end">
+								<div class="ui-input-icon-left mr-2">
+									<p:outputLabel  value="#{loginBean.usuario.perfil}"/>
+								</div>						
+								<div class="ui-input-icon-left mr-2">
+									<p:outputLabel  value="#{loginBean.usuario.nome}"/>
+								</div>		
+							</f:facet>
 						</p:menubar> 
 						
 					
