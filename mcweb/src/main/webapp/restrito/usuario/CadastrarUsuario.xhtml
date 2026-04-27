@@ -24,6 +24,16 @@
 						/>
 					<p:ajax update="grid" process="@this"/>
 				</p:selectOneMenu>
+				
+			<p:outputLabel for="especialidade" value="Especialidade: " rendered="#{cadastrarUsuarioBean.usuario.perfil eq 'MEDICO'}"/>
+				<p:selectOneMenu id="especialidade" value="#{cadastrarUsuarioBean.usuario.especialidade}" rendered="#{cadastrarUsuarioBean.usuario.perfil eq 'MEDICO'}">
+					<f:selectItem itemLabel="Selecione uma especialidade"/>
+					<f:selectItems value="#{cadastrarUsuarioBean.especialidades}"
+						var="especialidade" itemLabel="#{especialidade}"
+						itemValue="#{especialidade}"
+						/>
+					<p:ajax update="grid" process="@this"/>
+				</p:selectOneMenu>	
         
         	<p:outputLabel for="nome" value="Nome: "/>
             <p:inputText id="nome" value="#{cadastrarUsuarioBean.usuario.nome}" required="true"/>

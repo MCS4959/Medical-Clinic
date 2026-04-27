@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.mc.model.Usuario;
+import com.mc.model.enums.Especialidade;
 import com.mc.model.enums.Perfil;
 import com.mc.service.UsuarioService;
 
@@ -37,7 +38,7 @@ public class CadastrarUsuarioBean implements Serializable {
 
 	private Usuario usuario = new Usuario();
 	private List<Perfil> perfis = Arrays.asList(Perfil.values());
-
+	private List<Especialidade> especialidades = Arrays.asList(Especialidade.values());
 
 	@PostConstruct
 	public void inicializar() {		
