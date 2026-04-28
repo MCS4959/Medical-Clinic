@@ -10,6 +10,61 @@
 	  
 	  <ui:define name="corpo">
 	  
+	  <p:dataTable id="usuariosTable" var="usuarios" value="#{CadastrarUsuarioBean.usuarios}"
+				lazy="false" showGridlines="true"
+	    		style="margin-top: 20px" emptyMessage="Nenhum usuario encontrado." rows="10"
+	    		paginator="true" paginatorAlwaysVisible="true" paginatorPosition="bottom"
+	    		rowsPerPageTemplate="5,10,15">		
+
+				<p:column headerText="Id">
+					<h:outputText value="#{usuario.id}" />
+				</p:column>	
+
+				<p:column headerText="CRM">
+					<h:outputText value="#{usuario.crm}" />
+				</p:column>
+
+                <p:column headerText="Perfil">
+					<h:outputText value="#{usuario.perfil}" />
+				</p:column>
+				
+				<p:column headerText="Especialidade">
+					<h:outputText value="#{usuario.especialidade}" />
+				</p:column>
+
+				<p:column headerText="Nome"
+					filterBy="#{usuario.nome}" sortBy="#{usuario.nome}">
+					<h:outputText value="#{usuario.nome}" />
+				</p:column>	
+				
+				<p:column headerText="Telefone">
+           	      <h:outputText id="telefone" value="#{cadastrarUsuarioBean.usuario.telefone}"/>
+           	    </p:column>
+           	    
+           	    <p:column headerText="EMAIL">
+					<h:outputText value="#{usuario.email}" />
+				</p:column>
+				
+				<p:column headerText="Operações">					
+					
+					<p:commandButton id="cb1" icon="pi pi-pencil" title="Editar"	    				
+		            	oncomplete="PF('editarDialogWidgetVar').show()"
+		            	update=":formulario:editarDialog"		            	
+		            	process="@this">
+		            	<f:setPropertyActionListener target="#{CadastrarUsuarioBean.usuario}"
+							value="#{usuario}" />
+	            	</p:commandButton>
+
+					<p:commandButton icon="pi pi-trash"  title="Excluir"
+						onclick="PF('confirmacaoExclusao').show();"
+						process="@this"	>
+						<f:setPropertyActionListener target="#{CadastrarUsuarioBean.usuario}"
+							value="#{usuario}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+
 	  </ui:define>
-  
   </ui:composition>
+  

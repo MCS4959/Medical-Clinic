@@ -1,10 +1,12 @@
 package com.mc.model.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import com.mc.model.Usuario;
 import com.mc.util.jpa.Transactional;
@@ -47,5 +49,12 @@ public class UsuarioDao implements Serializable{
 			throw e;
 		}
 	}
+	public List<Usuario> buscarTodos() {
+		String query = "select a from Usuario a";
+		
+		Query q = manager.createQuery(query);
+		
+		return q.getResultList();
+		}
 	
 }

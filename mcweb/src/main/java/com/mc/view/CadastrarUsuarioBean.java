@@ -44,7 +44,7 @@ public class CadastrarUsuarioBean implements Serializable {
 	public void inicializar() {		
 
 		log.info("init pesquisa");
-		
+		this.setUsuarios(usuarioService.buscarTodos());
 	}
 	
 	public void salvar() {
