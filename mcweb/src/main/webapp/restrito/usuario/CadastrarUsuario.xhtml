@@ -12,8 +12,60 @@
 	  <ui:define name="corpo">
     <h:form>
         <p:messages id="msgs"/>
+        
+        <p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton icon="pi pi-plus" value="Novo" id="botaoNovo" 
+						oncomplete="PF('editarDialogWidgetVar').show()"
+		            	update="editarDialog"	
+						actionListener="#{cadastrarUsuarioBean.limpar}"	            	
+		            	process="@this"/>
 
-       <p:panelGrid id="grid" columns="2">       
+				</p:toolbarGroup>
+			</p:toolbar>	
+	  
+	   <p:dataTable id="usuariosTable" var="usuario" value="#{cadastrarUsuarioBean.usuario}"
+				lazy="false" showGridlines="true"
+	    		style="margin-top: 20px" emptyMessage="Nenhum usuario encontrado." rows="10"
+	    		paginator="true" paginatorAlwaysVisible="true" paginatorPosition="bottom"
+	    		rowsPerPageTemplate="5,10,15">		
+
+				<p:column headerText="Id">
+					<h:outputText value="#{usuario.id}" />
+				</p:column>	
+
+				<p:column headerText="Nome"
+					filterBy="#{aluno.nome}" sortBy="#{aluno.nome}">
+					<h:outputText value="#{aluno.nome}" />
+				</p:column>	
+
+				<p:column headerText="Operações">					
+					
+					<p:commandButton id="cb1" icon="pi pi-pencil" title="Editar"	    				
+		            	oncomplete="PF('editarDialogWidgetVar').show()"
+		            	update=":formulario:editarDialog"		            	
+		            	process="@this">
+		            	<f:setPropertyActionListener target="#{manterAlunoBean.aluno}" 
+							value="#{aluno}" />
+	            	</p:commandButton>
+
+					<p:commandButton icon="pi pi-trash"  title="Excluir"
+						onclick="PF('confirmacaoExclusao').show();"
+						process="@this"	>
+						<f:setPropertyActionListener target="#{manterAlunoBean.aluno}"
+							value="#{aluno}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+			
+       <p:dialog id="editarDialog" header="Cadastro" widgetVar="editarDialogWidgetVar"
+				modal="true" resizable="true" closeOnEscape="true"
+				showEffect="explode" hideEffect="explode" 
+				width="100%" position="center top" maximizable="true"
+				height="70%" fitViewport="true" responsive="true">
+				
+         <p:panelGrid id="grid" columns="2">       
        		
        		<p:outputLabel for="perfil" value="Perfil: " />
 				<p:selectOneMenu id="perfil" value="#{cadastrarUsuarioBean.usuario.perfil}">
@@ -58,7 +110,9 @@
         	
         	
         	 
-        </p:panelGrid>
+          </p:panelGrid>
+          
+        </p:dialog>
     </h:form>
 </ui:define>
   
