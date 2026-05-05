@@ -10,7 +10,7 @@
 	  <ui:define name="titulo">MC-Web</ui:define>
 	  
 	  <ui:define name="corpo">
-    <h:form>
+    <h:form id="formulario">
         <p:messages id="msgs"/>
         
         <p:toolbar style="margin-top: 20px">
@@ -24,7 +24,7 @@
 				</p:toolbarGroup>
 			</p:toolbar>	
 	  
-	   <p:dataTable id="usuariosTable" var="usuario" value="#{cadastrarUsuarioBean.usuario}"
+	   <p:dataTable id="usuariosTable" var="usuario" value="#{cadastrarUsuarioBean.usuarios}"
 				lazy="false" showGridlines="true"
 	    		style="margin-top: 20px" emptyMessage="Nenhum usuario encontrado." rows="10"
 	    		paginator="true" paginatorAlwaysVisible="true" paginatorPosition="bottom"
@@ -32,12 +32,29 @@
 
 				<p:column headerText="Id">
 					<h:outputText value="#{usuario.id}" />
-				</p:column>	
+				</p:column>
+				
+				<p:column headerText="Perfil"
+				    filterBy="#{usuario.perfil}" sortBy="#{usuario.perfil}">
+					<h:outputText value="#{usuario.perfil}" />
+				</p:column>
 
 				<p:column headerText="Nome"
-					filterBy="#{aluno.nome}" sortBy="#{aluno.nome}">
-					<h:outputText value="#{aluno.nome}" />
-				</p:column>	
+					filterBy="#{usuario.nome}" sortBy="#{usuario.nome}">
+					<h:outputText value="#{usuario.nome}" />
+				</p:column>
+				
+				<p:column headerText="EMAIL">
+					<h:outputText value="#{usuario.email}" />
+				</p:column>
+				
+				<p:column headerText="Telefone">
+					<h:outputText value="#{usuario.telefone}" />
+				</p:column>
+
+				<p:column headerText="Especialidade">
+					<h:outputText value="#{usuario.especialidade}" />
+				</p:column>
 
 				<p:column headerText="Operações">					
 					
@@ -45,15 +62,15 @@
 		            	oncomplete="PF('editarDialogWidgetVar').show()"
 		            	update=":formulario:editarDialog"		            	
 		            	process="@this">
-		            	<f:setPropertyActionListener target="#{manterAlunoBean.aluno}" 
-							value="#{aluno}" />
+		            	<f:setPropertyActionListener target="#{cadastrarUsuarioBean.usuario}" 
+							value="#{usuario}" />
 	            	</p:commandButton>
 
 					<p:commandButton icon="pi pi-trash"  title="Excluir"
 						onclick="PF('confirmacaoExclusao').show();"
 						process="@this"	>
-						<f:setPropertyActionListener target="#{manterAlunoBean.aluno}"
-							value="#{aluno}" />
+						<f:setPropertyActionListener target="#{cadastrarUsuarioBean.usuario}"
+							value="#{usuario}" />
 					</p:commandButton>
 				</p:column>
 
@@ -103,16 +120,31 @@
         	<p:outputLabel for="crm" value="Crm: " rendered="#{cadastrarUsuarioBean.usuario.perfil eq 'MEDICO'}" />
 			<p:inputMask id="crm" value="#{cadastrarUsuarioBean.usuario.crm}" required="true" rendered="#{cadastrarUsuarioBean.usuario.perfil eq 'MEDICO'}" mask="999999/aa" placeHolder="000000/UF" validateMask="true"/>
         	
-        	<p:commandButton value="Save" 
-	        	update="msgs grid" process="@this grid" 
+        	<p:commandButton value="Salvar" 
+	        	update="msgs usuariosTable" process="@this grid" 
 	        	actionListener="#{cadastrarUsuarioBean.salvar}" icon= "pi pi-save"
 	        	oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000);"/>
-        	
+
         	
         	 
           </p:panelGrid>
           
         </p:dialog>
+        
+        <p:confirmDialog id="confirmacaoExclusaoDialog"
+				widgetVar="confirmacaoExclusao"
+				message="Tem certeza que deseja excluir o usuario #{cadastrarUsuarioBean.usuario.nome}?"
+				header="Exclusão de usuário" severity="alert">
+				<p:button icon="pi pi-thumbs-down" value="Não"
+					onclick="PF('confirmacaoExclusao').hide(); return false;" 
+					process="@this"/>
+				<p:commandButton icon="pi pi-thumbs-up" value="Sim" 
+				    update=":formulario:usuariosTable"
+					onclick="PF('confirmacaoExclusao').hide();"
+					action="#{cadastrarUsuarioBean.excluir}"
+					process="@this"/>
+			</p:confirmDialog>
+			
     </h:form>
 </ui:define>
   

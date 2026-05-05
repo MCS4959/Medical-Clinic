@@ -1,6 +1,7 @@
 package com.mc.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -37,5 +38,12 @@ public class UsuarioService implements Serializable{
 		return null;
 	}
 	
+	public void excluir(Usuario usuario) {
+		this.usuarioDao.excluir(usuario);
+	}
+	
+	public List<Usuario> buscarTodos() {
+		return usuarioDao.buscarTodos();
+	}
 	
 }

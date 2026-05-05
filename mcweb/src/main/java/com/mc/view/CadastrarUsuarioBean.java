@@ -37,6 +37,7 @@ public class CadastrarUsuarioBean implements Serializable {
 	private UsuarioService usuarioService;
 
 	private Usuario usuario = new Usuario();
+	private List<Usuario> usuarios = new ArrayList<Usuario>();
 	private List<Perfil> perfis = Arrays.asList(Perfil.values());
 	private List<Especialidade> especialidades = Arrays.asList(Especialidade.values());
 
@@ -44,6 +45,7 @@ public class CadastrarUsuarioBean implements Serializable {
 	public void inicializar() {		
 
 		log.info("init pesquisa");
+		this.setUsuarios(usuarioService.buscarTodos());
 		
 	}
 	
@@ -51,6 +53,7 @@ public class CadastrarUsuarioBean implements Serializable {
 		log.info(usuario.toString());
 		
 		usuario = usuarioService.salvar(usuario);
+		this.setUsuarios(usuarioService.buscarTodos());
 		
 		FacesContext.getCurrentInstance().
         addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -59,6 +62,22 @@ public class CadastrarUsuarioBean implements Serializable {
 		limpar();
 		log.info("usuario: " + usuario.toString());
 	}	
+	
+	public void excluir() {
+		try {
+			usuarioService.excluir(usuario);
+			this.usuarios = usuarioService.buscarTodos();
+			FacesContext.getCurrentInstance().addMessage(null, 
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Usuario " + usuario.getNome() + " excluído com sucesso.", null));
+			log.info("usuario excluido = " + usuario.getNome());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, 
+			new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ocorreu um problema", null));
+		}
+	}
 	
 	public void limpar() {
 
