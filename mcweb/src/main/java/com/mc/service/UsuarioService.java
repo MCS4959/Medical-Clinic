@@ -7,6 +7,8 @@ import javax.inject.Inject;
 
 import com.mc.model.Usuario;
 import com.mc.model.dao.UsuarioDao;
+import com.mc.model.enums.Perfil;
+import com.mc.view.LoginBean;
 
 import lombok.extern.log4j.Log4j;
 
@@ -19,9 +21,21 @@ public class UsuarioService implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Inject	
 	private UsuarioDao usuarioDao;
+	@SuppressWarnings("unused")
+	@Inject
+	private LoginBean loginBean;
 	
 	public Usuario salvar(Usuario usuario) {
-		return usuarioDao.salvar(usuario);
+
+	    Usuario logado = loginBean.getUsuarioLogado();
+
+	    if (logado != null && logado.getPerfil() == Perfil.ATENDENTE) {
+	        if (usuario.getPerfil() != Perfil.PACIENTE) {
+	            throw new RuntimeException("ATENDENTE só pode cadastrar PACIENTE");
+	        }
+	    }
+
+	    return usuarioDao.salvar(usuario);
 	}
 
 	public Usuario buscarPorEmail(String email){
@@ -39,7 +53,16 @@ public class UsuarioService implements Serializable{
 	}
 	
 	public void excluir(Usuario usuario) {
-		this.usuarioDao.excluir(usuario);
+
+	    Usuario logado = loginBean.getUsuarioLogado();
+
+	    if (logado != null && logado.getPerfil() == Perfil.ATENDENTE) {
+	        if (usuario.getPerfil() != Perfil.PACIENTE) {
+	            throw new RuntimeException("ATENDENTE só pode excluir PACIENTE");
+	        }
+	    }
+
+	    usuarioDao.excluir(usuario);
 	}
 	
 	public List<Usuario> buscarTodos() {

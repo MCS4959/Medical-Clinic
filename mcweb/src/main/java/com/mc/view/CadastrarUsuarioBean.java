@@ -35,6 +35,8 @@ public class CadastrarUsuarioBean implements Serializable {
 
 	@Inject
 	private UsuarioService usuarioService;
+	@Inject
+	private LoginBean loginBean;
 
 	private Usuario usuario = new Usuario();
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
@@ -42,11 +44,18 @@ public class CadastrarUsuarioBean implements Serializable {
 	private List<Especialidade> especialidades = Arrays.asList(Especialidade.values());
 
 	@PostConstruct
-	public void inicializar() {		
+	public void inicializar() {
 
 		log.info("init pesquisa");
-		this.setUsuarios(usuarioService.buscarTodos());
-		
+	    this.usuarios = usuarioService.buscarTodos();
+
+	    Usuario logado = loginBean.getUsuarioLogado();
+
+	    if (logado != null && logado.getPerfil() == Perfil.ATENDENTE) {
+	        this.perfis = Arrays.asList(Perfil.PACIENTE);
+	    } else {
+	        this.perfis = Arrays.asList(Perfil.values());
+	    }
 	}
 	
 	public void salvar() {
