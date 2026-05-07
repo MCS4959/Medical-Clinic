@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.mc.model.enums.Especialidade;
 import com.mc.model.enums.Perfil;
 
 import lombok.EqualsAndHashCode;
@@ -39,6 +40,8 @@ public class Usuario implements Serializable{
     private String telefone;
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
+    @Enumerated(EnumType.STRING)
+    private Especialidade especialidade;
     private String crm;
     
 }
