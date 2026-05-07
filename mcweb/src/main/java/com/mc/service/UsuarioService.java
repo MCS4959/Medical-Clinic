@@ -66,7 +66,17 @@ public class UsuarioService implements Serializable{
 	}
 	
 	public List<Usuario> buscarTodos() {
-		return usuarioDao.buscarTodos();
+
+	    Usuario logado = loginBean.getUsuarioLogado();
+
+	    if (logado != null && logado.getPerfil() == Perfil.ATENDENTE) {
+	        return usuarioDao.buscarTodos()
+	                .stream()
+	                .filter(u -> u.getPerfil() == Perfil.PACIENTE)
+	                .toList();
+	    }
+
+	    return usuarioDao.buscarTodos();
 	}
 	
 }
