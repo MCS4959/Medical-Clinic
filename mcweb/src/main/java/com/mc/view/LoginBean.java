@@ -99,5 +99,9 @@ public class LoginBean implements Serializable {
 		
 		return session;
 	}
+	public Usuario getUsuarioLogado() {
+	    HttpSession session = getSession();
+	    return (Usuario) session.getAttribute("usuario");
+	}
 
 }

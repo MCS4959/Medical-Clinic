@@ -1,13 +1,17 @@
 package com.mc.model.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import com.mc.model.Usuario;
 import com.mc.util.jpa.Transactional;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,4 +52,26 @@ public class UsuarioDao implements Serializable{
 		}
 	}
 	
+	@Transactional
+	public void excluir(Usuario usuario) throws PersistenceException {
+
+		try {
+			Usuario a = manager.find(Usuario.class, usuario.getId());
+			manager.remove(a);
+			manager.flush();
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw e;
+		} 
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Usuario> buscarTodos() {
+		
+		String query="select a from Usuario a";
+		
+		Query q = manager.createQuery(query);
+		
+		return q.getResultList();
+	}
 }
