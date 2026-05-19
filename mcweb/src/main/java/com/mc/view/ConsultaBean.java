@@ -14,15 +14,15 @@ import javax.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import com.mc.model.Agendar;
-import com.mc.service.AgendarService;
+import com.mc.model.Consulta;
+import com.mc.service.ConsultaService;
 
 @Log4j
 @Getter
 @Setter
 @Named
 @ViewScoped
-public class AgendarBean implements Serializable{
+public class ConsultaBean implements Serializable{
 	
 	/**
 	 * 
@@ -30,40 +30,40 @@ public class AgendarBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private AgendarService agendarService;
-	private Agendar agendar = new Agendar();
-	private List<Agendar> agendas = new ArrayList<Agendar>();
+	private ConsultaService consultaService;
+	private Consulta consulta = new Consulta();
+	private List<Consulta> consultas = new ArrayList<Consulta>();
 
 	
 	@PostConstruct
 	public void inicializar() {
 		log.debug("init pesquisa"); 
-		this.setAgendas(AgendarService.buscarTodos());
+		this.setConsultas(ConsultaService.buscarTodos());
 		limpar();
 	}
 	
 	public void salvar() {
-		log.info(curso.toString());
-		manterCursoService.salvar(curso);
-		this.cursos = manterCursoService.buscarTodos();
+		log.info(consulta.toString());
+		ConsultaService.salvar(consulta);
+		this.consultas = ConsultaService.buscarTodos();
 
 		FacesContext.getCurrentInstance().
         addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-        		"O curso foi gravado com sucesso!", 
-        		curso.toString()));
+        		"A consulta foi gravado com sucesso!", 
+        		consulta.toString()));
 		
 				limpar();
-		log.info("curso: " + curso.toString());
+		log.info("consulta: " + consulta.toString());
 	}
 	
 	public void excluir() {
 		try {
-			manterCursoService.excluir(curso);
-			this.cursos = manterCursoService.buscarTodos();
+			ConsultaService.excluir(consulta);
+			this.consultas = ConsultaService.buscarTodos();
 			FacesContext.getCurrentInstance().addMessage(null, 
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"Curso " + curso.getSigla() + " excluído com sucesso.", null));
-			log.info("curso excluido = " + curso.getSigla());
+							"Consulta " + consulta.getId() + " excluído com sucesso.", null));
+			log.info("consulta excluido = " + consulta.getId());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,7 +74,7 @@ public class AgendarBean implements Serializable{
 		
 	public void limpar() {
 
-		this.curso = new Curso();
+		this.consulta = new Consulta();
 	}
 	
 }

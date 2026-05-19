@@ -11,10 +11,10 @@ import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mc.model.Agendar;
+import com.mc.model.Consulta;
 import com.mc.util.jpa.Transactional;
 
-public class AgendarDao implements Serializable{
+public class ConsultaDao implements Serializable{
 
 	/**
 	 * 
@@ -23,15 +23,15 @@ public class AgendarDao implements Serializable{
 	@Inject
 	private EntityManager manager;
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(AgendarDao.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConsultaDao.class);
 	
 	@Transactional
-	public Agendar salvar(Agendar agendar) throws PersistenceException {
+	public Consulta salvar(Consulta consulta) throws PersistenceException {
 		
-		LOGGER.info("salvar DAO... Agendar = " + agendar);
+		LOGGER.info("salvar DAO... Consulta = " + consulta);
 		
 		try {
-			return manager.merge(agendar);
+			return manager.merge(consulta);
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw e;
@@ -39,10 +39,10 @@ public class AgendarDao implements Serializable{
 	}
 	
 	@Transactional
-	public void excluir(Agendar agendar) throws PersistenceException {
+	public void excluir(Consulta consulta) throws PersistenceException {
 
 		try {
-			Agendar a = manager.find(Agendar.class, agendar.getId());
+			Consulta a = manager.find(Consulta.class, consulta.getId());
 			manager.remove(a);
 			manager.flush();
 		} catch (PersistenceException e) {
@@ -51,12 +51,12 @@ public class AgendarDao implements Serializable{
 		} 
 	}
 	
-	public Agendar buscarPeloCodigo(Long id) {
-		return manager.find(Agendar.class, id);
+	public Consulta buscarPeloCodigo(Long id) {
+		return manager.find(Consulta.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Agendar> buscarTodos() {
+	public List<Consulta> buscarTodos() {
 		
 		String query="select a from Curso a";
 		

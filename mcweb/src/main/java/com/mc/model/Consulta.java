@@ -19,7 +19,7 @@ import lombok.ToString;
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 @Entity
-public class Agendar implements Serializable {
+public class Consulta implements Serializable {
 
 	/**
 	 * 
