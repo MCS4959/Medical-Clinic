@@ -38,14 +38,14 @@ public class ConsultaBean implements Serializable{
 	@PostConstruct
 	public void inicializar() {
 		log.debug("init pesquisa"); 
-		this.setConsultas(ConsultaService.buscarTodos());
+		this.setConsultas(consultaService.buscarTodos());
 		limpar();
 	}
 	
 	public void salvar() {
 		log.info(consulta.toString());
-		ConsultaService.salvar(consulta);
-		this.consultas = ConsultaService.buscarTodos();
+		consultaService.salvar(consulta);
+		this.consultas = consultaService.buscarTodos();
 
 		FacesContext.getCurrentInstance().
         addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -58,8 +58,8 @@ public class ConsultaBean implements Serializable{
 	
 	public void excluir() {
 		try {
-			ConsultaService.excluir(consulta);
-			this.consultas = ConsultaService.buscarTodos();
+			consultaService.excluir(consulta);
+			this.consultas = consultaService.buscarTodos();
 			FacesContext.getCurrentInstance().addMessage(null, 
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"Consulta " + consulta.getId() + " excluído com sucesso.", null));

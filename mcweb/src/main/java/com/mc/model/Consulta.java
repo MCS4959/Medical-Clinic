@@ -31,10 +31,11 @@ public class Consulta implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;	
-	private LocalDateTime dia;
-	private LocalDateTime hora;
+	private LocalDateTime data;
 	private String medico;
-	
+	private String especialidade;
+	private boolean status;
+	private LocalDateTime realizacao;
 
 	
 	
