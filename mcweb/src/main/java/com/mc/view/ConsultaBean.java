@@ -2,6 +2,7 @@ package com.mc.view;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +16,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import com.mc.model.Consulta;
+import com.mc.model.enums.Especialidade;
 import com.mc.service.ConsultaService;
 
 @Log4j
@@ -33,6 +35,7 @@ public class ConsultaBean implements Serializable{
 	private ConsultaService consultaService;
 	private Consulta consulta = new Consulta();
 	private List<Consulta> consultas = new ArrayList<Consulta>();
+	private List<Especialidade> especialidades = Arrays.asList(Especialidade.values());
 
 	
 	@PostConstruct

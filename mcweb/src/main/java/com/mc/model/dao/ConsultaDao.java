@@ -58,7 +58,7 @@ public class ConsultaDao implements Serializable{
 	@SuppressWarnings("unchecked")
 	public List<Consulta> buscarTodos() {
 		
-		String query="select a from Curso a";
+		String query="select a from Consulta a";
 		
 		Query q = manager.createQuery(query);
 		

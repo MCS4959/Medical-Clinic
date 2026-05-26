@@ -4,10 +4,13 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.mc.model.enums.Especialidade;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,10 +36,9 @@ public class Consulta implements Serializable {
 	private Long id;	
 	private LocalDateTime data;
 	private String medico;
-	private String especialidade;
+	@Enumerated(EnumType.STRING)
+    private Especialidade especialidade;
 	private boolean status;
-	private LocalDateTime realizacao;
-
 	
 	
 }
