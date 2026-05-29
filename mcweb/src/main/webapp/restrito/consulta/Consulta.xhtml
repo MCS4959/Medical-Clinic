@@ -4,7 +4,9 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://sun.com">
+    
 
     <ui:define name="titulo">MC-Web</ui:define>
 
@@ -41,11 +43,10 @@
                     <h:outputText value="#{consulta.id}" />
                 </p:column>
 
-                <p:column headerText="Data" filterBy="#{consulta.data}" sortBy="#{consulta.data}">
-                    <h:outputText value="#{consulta.data}">
-                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" />
-                    </h:outputText>
-                </p:column>
+                <p:column headerText="Data">
+    			<h:outputText value="#{consulta.data}" 
+                  	converter="localDateTimeConverter" />
+				</p:column>
 
                 <p:column headerText="Médico" filterBy="#{consulta.medico}" sortBy="#{consulta.medico}">
                     <h:outputText value="#{consulta.medico}" />
@@ -55,16 +56,13 @@
                     <h:outputText value="#{consulta.especialidade}" />
                 </p:column>
 
-                <p:column headerText="Status">
-                    <h:outputText value="#{consulta.status}" />
-                </p:column>
-
-                <p:column headerText="Realização">
-                    <h:outputText value="#{consulta.realizacao}">
-                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" />
-                    </h:outputText>
-                </p:column>
-
+                	<p:column headerText="Status">
+    				<h:outputText value="Agendado" 
+                  		rendered="#{consulta.status}" />
+   					<h:outputText value="Pendente"  
+                  		rendered="#{!consulta.status}" />
+					</p:column>
+					
                 <p:column headerText="Operações">
                     <p:commandButton id="btnEditar"
                                      icon="pi pi-pencil"
@@ -103,10 +101,11 @@
                 <p:panelGrid id="grid" columns="2">
 					
 					<div class="ui-fluid grid formgrid">
-					<div class="field col-12 md:col-4">
-						<p:outputLabel for="data" value="Data da Consulta" />
-						<p:datePicker id="data" value="#{consultaBean.consulta.data}" />
-					</div>
+						<p:datePicker id="data" 
+              				value="#{consultaBean.consulta.data}"
+              				pattern="dd/MM/yyyy HH:mm"
+              				showTime="true"
+              				converter="localDateTimeConverter" />
 					</div>
 
 
@@ -115,10 +114,19 @@
                                  value="#{consultaBean.consulta.medico}"
                                  required="true" />
 
-                      <p:outputLabel for="especialidade" value="Especialidade do Médico:" /> 
-                      <p:selectOneMenu id="especialidade" value="#{consultaBean.consulta.especialidade}"> 
-                      <f:selectItems value="#{consultaBean.consulta.especialidade}" var="consulta" itemLabel="#{consulta.especialidade}" itemValue="#{consulta}" /> 
-                      </p:selectOneMenu>  
+                      <p:outputLabel for="especialidade" value="Especialidade do Médico:" />
+					  <p:selectOneMenu id="especialidade" value="#{consultaBean.consulta.especialidade}">
+    				  <f:selectItems value="#{consultaBean.especialidades}" 
+                   			var="esp" 
+                   			itemLabel="#{esp}" 
+                   			itemValue="#{esp}" />
+					  </p:selectOneMenu>
+					  
+					  <p:outputLabel for="status" value="Status:" />
+					  <p:selectOneMenu id="status" value="#{consultaBean.consulta.status}">
+    				  <f:selectItem itemLabel="Pendente"  itemValue="#{false}" />
+    				  <f:selectItem itemLabel="Agendado" itemValue="#{true}" />
+					  </p:selectOneMenu>
 
                     <p:outputLabel value="" />
                     <p:commandButton value="Salvar"

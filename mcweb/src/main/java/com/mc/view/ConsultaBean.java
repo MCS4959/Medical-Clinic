@@ -74,6 +74,11 @@ public class ConsultaBean implements Serializable{
 			new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ocorreu um problema", null));
 		}
 	}
+	
+	// No ConsultaBean.java
+	public Especialidade[] getEspecialidades() {
+	    return Especialidade.values();
+	}
 		
 	public void limpar() {
 
