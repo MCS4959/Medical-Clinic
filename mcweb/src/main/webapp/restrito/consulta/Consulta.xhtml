@@ -65,13 +65,12 @@
 					
                 <p:column headerText="Operações">
                     <p:commandButton id="btnEditar"
-                                     icon="pi pi-pencil"
-                                     title="Editar"
-                                     oncomplete="PF('editarDialogWidgetVar').show()"
-                                     update=":formulario:editarDialog"
-                                     process="@this">
-                        <f:setPropertyActionListener target="#{consultaBean.consulta}" value="#{consulta}" />
-                    </p:commandButton>
+		                 icon="pi pi-pencil"
+		                 title="Editar"
+		                 actionListener="#{consultaBean.prepararEdicao(consulta)}"
+		                 oncomplete="PF('editarDialogWidgetVar').show()"
+		                 update=":formulario:editarDialog"
+		                 process="@this" />
 
                     <p:commandButton id="btnExcluir"
                                      icon="pi pi-trash"
@@ -98,29 +97,33 @@
                       fitViewport="true"
                       responsive="true">
 
-                <p:panelGrid id="grid" columns="2">
-					
-					<div class="ui-fluid grid formgrid">
-						<p:datePicker id="data" 
-              				value="#{consultaBean.consulta.data}"
-              				pattern="dd/MM/yyyy HH:mm"
-              				showTime="true"
-              				converter="localDateTimeConverter" />
-					</div>
+                <p:panelGrid id="grid" columns="2" layout="grid">		
+                
+                	<p:outputLabel for="data" value="Data e Hora da Consulta:" />
+                   <p:datePicker id="data" 
+              			value="#{consultaBean.consulta.data}"
+              			pattern="dd/MM/yyyy HH:mm"
+              			showTime="true"
+              			converter="localDateTimeConverter" />		
 
+                    <p:outputLabel for="especialidade" value="Especialidade do Médico:" />
+						<p:selectOneMenu id="especialidade" value="#{consultaBean.consulta.especialidade}" required="true">
+						    <f:selectItem itemLabel="Selecione uma Especialidade" itemValue="" noSelectionOption="true" />
+						    <f:selectItems value="#{consultaBean.especialidades}" 
+						                   var="esp" 
+						                   itemLabel="#{esp}" 
+						                   itemValue="#{esp}" />
+						    <p:ajax listener="#{consultaBean.carregarMedicos}" update="medico" process="@this" />
+					</p:selectOneMenu>
 
-                    <p:outputLabel for="medico" value="Médico: " />
-                    <p:inputText id="medico"
-                                 value="#{consultaBean.consulta.medico}"
-                                 required="true" />
-
-                      <p:outputLabel for="especialidade" value="Especialidade do Médico:" />
-					  <p:selectOneMenu id="especialidade" value="#{consultaBean.consulta.especialidade}">
-    				  <f:selectItems value="#{consultaBean.especialidades}" 
-                   			var="esp" 
-                   			itemLabel="#{esp}" 
-                   			itemValue="#{esp}" />
-					  </p:selectOneMenu>
+					<p:outputLabel for="medico" value="Médico: " />
+						<p:selectOneMenu id="medico" value="#{consultaBean.consulta.medico}" required="true">
+						    <f:selectItem itemLabel="Selecione um Médico" itemValue="" noSelectionOption="true" />
+						    <f:selectItems value="#{consultaBean.medicos}" 
+						                   var="med" 
+						                   itemLabel="#{med.nome}" 
+						                   itemValue="#{med.nome}" /> 
+						 </p:selectOneMenu>
 					  
 					  <p:outputLabel for="status" value="Status:" />
 					  <p:selectOneMenu id="status" value="#{consultaBean.consulta.status}">
@@ -154,7 +157,8 @@
                                  update=":formulario:consultasTable :formulario:msgs"
                                  onclick="PF('confirmacaoExclusao').hide();"
                                  action="#{consultaBean.excluir}"
-                                 process="@this" />
+                                 process="@this" 
+                                 oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000);"/>
             </p:confirmDialog>
 
         </h:form>

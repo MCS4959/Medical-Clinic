@@ -16,8 +16,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import com.mc.model.Consulta;
+import com.mc.model.Usuario;
 import com.mc.model.enums.Especialidade;
 import com.mc.service.ConsultaService;
+import com.mc.service.UsuarioService;
 
 @Log4j
 @Getter
@@ -33,9 +35,13 @@ public class ConsultaBean implements Serializable{
 	
 	@Inject
 	private ConsultaService consultaService;
+	@Inject
+	private UsuarioService usuarioService;
+	
 	private Consulta consulta = new Consulta();
 	private List<Consulta> consultas = new ArrayList<Consulta>();
 	private List<Especialidade> especialidades = Arrays.asList(Especialidade.values());
+	private List<Usuario> medicos = new ArrayList<Usuario>();
 
 	
 	@PostConstruct
@@ -45,6 +51,21 @@ public class ConsultaBean implements Serializable{
 		limpar();
 	}
 	
+	// Método que será chamado pelo componente <p:ajax> da View
+		public void carregarMedicos() {
+			if (this.consulta != null && this.consulta.getEspecialidade() != null) {
+				this.medicos = usuarioService.buscarMedicosPorEspecialidade(this.consulta.getEspecialidade());
+			} else {
+				this.medicos = new ArrayList<>();
+			}
+		}
+
+		// Método auxiliar para preparar a edição de uma consulta existente
+		public void prepararEdicao(Consulta consultaSelecionada) {
+			this.consulta = consultaSelecionada;
+			carregarMedicos(); // Carrega os médicos da especialidade já gravada na consulta
+		}
+		
 	public void salvar() {
 		log.info(consulta.toString());
 		consultaService.salvar(consulta);
@@ -83,6 +104,7 @@ public class ConsultaBean implements Serializable{
 	public void limpar() {
 
 		this.consulta = new Consulta();
+		this.medicos = new ArrayList<>();
 	}
 	
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.inject.Inject;
 import com.mc.model.Consulta;
+
 import com.mc.model.dao.ConsultaDao;
 
 public class ConsultaService implements Serializable{

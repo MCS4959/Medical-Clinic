@@ -11,7 +11,9 @@ import com.mc.model.dao.UsuarioDao;
 import com.mc.model.enums.Perfil;
 import com.mc.view.LoginBean;
 
+
 import lombok.extern.log4j.Log4j;
+
 
 @Log4j
 @ApplicationScoped
@@ -23,6 +25,7 @@ public class UsuarioService implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Inject	
 	private UsuarioDao usuarioDao;
+	
 	@SuppressWarnings("unused")
 	@Inject
 	private LoginBean loginBean;
@@ -89,6 +92,17 @@ public class UsuarioService implements Serializable{
 	    }
 
 	    return usuarioDao.buscarTodos();
+	}
+	
+	public List<Usuario> buscarMedicosPorEspecialidade(com.mc.model.enums.Especialidade especialidade) {
+	    if (especialidade == null) {
+	        return new java.util.ArrayList<>();
+	    }
+	    // Filtra na base de dados todos os utilizadores que são MÉDICOS e têm a especialidade escolhida
+	    return usuarioDao.buscarTodos()
+	            .stream()
+	            .filter(u -> u.getPerfil() == com.mc.model.enums.Perfil.MEDICO && u.getEspecialidade() == especialidade)
+	            .toList();
 	}
 	
 }
