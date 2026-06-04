@@ -1,0 +1,167 @@
+<ui:composition
+    template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://sun.com">
+    
+
+    <ui:define name="titulo">MC-Web</ui:define>
+
+    <ui:define name="corpo">
+        <h:form id="formulario">
+            <p:messages id="msgs" />
+
+            <p:toolbar style="margin-top: 20px">
+                <p:toolbarGroup>
+                    <p:commandButton id="botaoNovo"
+                                     icon="pi pi-plus"
+                                     value="Novo"
+                                     oncomplete="PF('editarDialogWidgetVar').show()"
+                                     update="editarDialog"
+                                     actionListener="#{consultaBean.limpar}"
+                                     process="@this" />
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:dataTable id="consultasTable"
+                         var="consulta"
+                         value="#{consultaBean.consultas}"
+                         lazy="false"
+                         showGridlines="true"
+                         style="margin-top: 20px"
+                         emptyMessage="Nenhuma consulta encontrada."
+                         rows="10"
+                         paginator="true"
+                         paginatorAlwaysVisible="true"
+                         paginatorPosition="bottom"
+                         rowsPerPageTemplate="5,10,15">
+
+                <p:column headerText="Id">
+                    <h:outputText value="#{consulta.id}" />
+                </p:column>
+
+                <p:column headerText="Data">
+    			<h:outputText value="#{consulta.data}" 
+                  	converter="localDateTimeConverter" />
+				</p:column>
+
+                <p:column headerText="Médico" filterBy="#{consulta.medico}" sortBy="#{consulta.medico}">
+                    <h:outputText value="#{consulta.medico}" />
+                </p:column>
+
+                <p:column headerText="Especialidade">
+                    <h:outputText value="#{consulta.especialidade}" />
+                </p:column>
+
+                	<p:column headerText="Status">
+    				<h:outputText value="Agendado" 
+                  		rendered="#{consulta.status}" />
+   					<h:outputText value="Pendente"  
+                  		rendered="#{!consulta.status}" />
+					</p:column>
+					
+                <p:column headerText="Operações">
+                    <p:commandButton id="btnEditar"
+		                 icon="pi pi-pencil"
+		                 title="Editar"
+		                 actionListener="#{consultaBean.prepararEdicao(consulta)}"
+		                 oncomplete="PF('editarDialogWidgetVar').show()"
+		                 update=":formulario:editarDialog"
+		                 process="@this" />
+
+                    <p:commandButton id="btnExcluir"
+                                     icon="pi pi-trash"
+                                     title="Excluir"
+                                     onclick="PF('confirmacaoExclusao').show();"
+                                     process="@this">
+                        <f:setPropertyActionListener target="#{consultaBean.consulta}" value="#{consulta}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+
+            <p:dialog id="editarDialog"
+                      header="Marcar Consulta"
+                      widgetVar="editarDialogWidgetVar"
+                      modal="true"
+                      resizable="true"
+                      closeOnEscape="true"
+                      showEffect="explode"
+                      hideEffect="explode"
+                      width="100%"
+                      position="center top"
+                      maximizable="true"
+                      height="70%"
+                      fitViewport="true"
+                      responsive="true">
+
+                <p:panelGrid id="grid" columns="2" layout="grid">		
+                
+                	<p:outputLabel for="data" value="Data e Hora da Consulta:" />
+                   <p:datePicker id="data" 
+              			value="#{consultaBean.consulta.data}"
+              			pattern="dd/MM/yyyy HH:mm"
+              			showTime="true"
+              			converter="localDateTimeConverter" />		
+
+                    <p:outputLabel for="especialidade" value="Especialidade do Médico:" />
+						<p:selectOneMenu id="especialidade" value="#{consultaBean.consulta.especialidade}" required="true">
+						    <f:selectItem itemLabel="Selecione uma Especialidade" itemValue="" noSelectionOption="true" />
+						    <f:selectItems value="#{consultaBean.especialidades}" 
+						                   var="esp" 
+						                   itemLabel="#{esp}" 
+						                   itemValue="#{esp}" />
+						    <p:ajax listener="#{consultaBean.carregarMedicos}" update="medico" process="@this" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="medico" value="Médico: " />
+						<p:selectOneMenu id="medico" value="#{consultaBean.consulta.medico}" required="true">
+						    <f:selectItem itemLabel="Selecione um Médico" itemValue="" noSelectionOption="true" />
+						    <f:selectItems value="#{consultaBean.medicos}" 
+						                   var="med" 
+						                   itemLabel="#{med.nome}" 
+						                   itemValue="#{med.nome}" /> 
+						 </p:selectOneMenu>
+					  
+					  <p:outputLabel for="status" value="Status:" />
+					  <p:selectOneMenu id="status" value="#{consultaBean.consulta.status}">
+    				  <f:selectItem itemLabel="Pendente"  itemValue="#{false}" />
+    				  <f:selectItem itemLabel="Agendado" itemValue="#{true}" />
+					  </p:selectOneMenu>
+
+                    <p:outputLabel value="" />
+                    <p:commandButton value="Salvar"
+                                     update="msgs consultasTable"
+                                     process="grid"
+                                     actionListener="#{consultaBean.salvar}"
+                                     icon="pi pi-save"
+                                     oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000);" />
+
+                </p:panelGrid>
+            </p:dialog>
+
+            <p:confirmDialog id="confirmacaoExclusaoDialog"
+                             widgetVar="confirmacaoExclusao"
+                             message="Tem certeza que deseja excluir a Consulta #{consultaBean.consulta.id}?"
+                             header="Exclusão de consulta"
+                             severity="alert">
+
+                <p:button icon="pi pi-thumbs-down"
+                          value="Não"
+                          onclick="PF('confirmacaoExclusao').hide(); return false;" />
+
+                <p:commandButton icon="pi pi-thumbs-up"
+                                 value="Sim"
+                                 update=":formulario:consultasTable :formulario:msgs"
+                                 onclick="PF('confirmacaoExclusao').hide();"
+                                 action="#{consultaBean.excluir}"
+                                 process="@this" 
+                                 oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000);"/>
+            </p:confirmDialog>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
