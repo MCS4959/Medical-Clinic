@@ -1,0 +1,111 @@
+<ui:composition
+    template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Fila de Atendimento Médico</ui:define>
+
+    <ui:define name="corpo">
+        <h:form id="formularioAtendimento">
+            <p:messages id="msgs" showDetail="false" closable="true" />
+
+            <h:panelGroup id="painelListagem">
+                <h2>Olá, Dr(a). #{loginBean.usuarioLogado.nome} - Suas Consultas Pendentes</h2>
+                
+                <p:dataTable id="tabelaConsultas"
+             var="consulta"
+             value="#{atendimentoBean.consultasDoMedico}"
+             emptyMessage="Nenhuma consulta agendada para você no momento."
+             showGridlines="true"
+             style="margin-top: 15px">
+
+    <p:column headerText="Código" width="10%">
+        <h:outputText value="#{consulta.id}" />
+    </p:column>
+    
+    <p:column headerText="Paciente" width="25%">
+    	<h:outputText value="#{consulta.paciente}" />
+	</p:column>
+
+    <p:column headerText="Data/Hora" width="25%">
+        <h:outputText value="#{consulta.data}" converter="localDateTimeConverter" />
+    </p:column>
+
+    <p:column headerText="Especialidade" width="25%">
+        <h:outputText value="#{consulta.especialidade}" />
+    </p:column>
+
+    <p:column headerText="Ações" width="15%" style="text-align: center;">
+        <p:commandButton value="Atender"
+                         icon="pi pi-user-edit"
+                         actionListener="#{atendimentoBean.prepararAtendimento(consulta)}"
+                         update=":formularioAtendimento:painelProntuario"
+                         oncomplete="PF('dialogAtendimentoWidget').show()"
+                         process="@this" 
+                         styleClass="ui-button-success" />
+    </p:column>
+</p:dataTable>
+            </h:panelGroup>
+
+            <p:dialog id="dialogAtendimento" 
+                      header="Prontuário Médico Eletrônico" 
+                      widgetVar="dialogAtendimentoWidget" 
+                      modal="true" 
+                      resizable="false"
+                      width="650"
+                      responsive="true">
+                      
+                <h:panelGroup id="painelProntuario">
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" style="margin-bottom: 15px;">
+                        <h:outputLabel value="Consulta nº:" style="font-weight: bold;" />
+                        <h:outputText value="#{atendimentoBean.consultaSelecionada.id}" />
+                        
+                        <h:outputLabel value="Paciente:" style="font-weight: bold;" />
+						<h:outputText value="#{atendimentoBean.consultaSelecionada.paciente}" />
+
+                        <h:outputLabel value="Data do Agendamento:" style="font-weight: bold;" />
+                        <h:outputText value="#{atendimentoBean.consultaSelecionada.data}" converter="localDateTimeConverter" />
+                    </p:panelGrid>
+
+                    <p:separator />
+
+                    <div style="margin-top: 10px;">
+                        <p:outputLabel for="relatorio" value="Anamnese, Sintomas e Conduta Clínica:" style="font-weight: bold; display:block; margin-bottom: 5px;" />
+                        <p:inputTextarea id="relatorio" 
+                                         value="#{atendimentoBean.consultaSelecionada.relatorio}" 
+                                         rows="12" 
+                                         autoResize="false"
+                                         maxlength="3000" 
+                                         counter="contadorCaracteres" 
+                                         counterTemplate="{0} caracteres restantes."
+                                         required="true"
+                                         requiredMessage="É obrigatório preencher o relatório médico para encerrar a consulta."
+                                         style="width: 100%; box-sizing: border-box; font-family: sans-serif; font-size: 14px;" />
+                        <h:outputText id="contadorCaracteres" style="color: gray; font-size: 11px; display: block; text-align: right;" />
+                    </div>
+
+                    <p:spacer height="15" />
+
+                    <div style="text-align: right;">
+                        <p:commandButton value="Cancelar" 
+                                         onclick="PF('dialogAtendimentoWidget').hide(); return false;" 
+                                         styleClass="ui-button-flat" 
+                                         style="margin-right: 10px;"/>
+                                         
+                        <p:commandButton value="Finalizar Atendimento" 
+                                         actionListener="#{atendimentoBean.finalizarAtendimento}"
+                                         update="tabelaConsultas msgs"
+                                         process="dialogAtendimento"
+                                         icon="pi pi-check-circle"
+                                         oncomplete="if (!args.validationFailed) PF('dialogAtendimentoWidget').hide();"
+                                         styleClass="ui-button-primary" />
+                    </div>
+                </h:panelGroup>
+            </p:dialog>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

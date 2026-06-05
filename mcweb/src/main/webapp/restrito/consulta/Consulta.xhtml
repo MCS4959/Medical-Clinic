@@ -100,11 +100,15 @@
                 <p:panelGrid id="grid" columns="2" layout="grid">		
                 
                 	<p:outputLabel for="data" value="Data e Hora da Consulta:" />
-                   <p:datePicker id="data" 
-              			value="#{consultaBean.consulta.data}"
-              			pattern="dd/MM/yyyy HH:mm"
-              			showTime="true"
-              			converter="localDateTimeConverter" />		
+                    <p:datePicker id="data" 
+		              value="#{consultaBean.consulta.data}"
+		              pattern="dd/MM/yyyy HH:mm"
+		              showTime="true"
+		              hourFormat="24"
+		              readonlyInput="false"
+		              mask="true" 
+		              converter="localDateTimeConverter"
+		              required="true" />		
 
                     <p:outputLabel for="especialidade" value="Especialidade do Médico:" />
 						<p:selectOneMenu id="especialidade" value="#{consultaBean.consulta.especialidade}" required="true">
@@ -124,7 +128,27 @@
 						                   itemLabel="#{med.nome}" 
 						                   itemValue="#{med.nome}" /> 
 						 </p:selectOneMenu>
-					  
+						 
+						 <p:outputLabel for="selecaoPaciente" value="Paciente:" 
+						               rendered="#{loginBean.usuarioLogado.perfil eq 'ATENDENTE' or loginBean.usuarioLogado.perfil eq 'ADMIN'}" />
+							<p:selectOneMenu id="selecaoPaciente" 
+							                 value="#{consultaBean.consulta.paciente}" 
+							                 required="true"
+							                 requiredMessage="É obrigatório selecionar um paciente."
+							                 rendered="#{loginBean.usuarioLogado.perfil eq 'ATENDENTE' or loginBean.usuarioLogado.perfil eq 'ADMIN'}">
+							    
+							    <f:selectItem itemLabel="Selecione o Paciente..." itemValue="" />
+							    <f:selectItems value="#{consultaBean.todosOsPacientes}" 
+							                   var="pac" 
+							                   itemLabel="#{pac.nome}" 
+							                   itemValue="#{pac.nome}" /> 
+							</p:selectOneMenu>
+						
+						<p:outputLabel value="Paciente:" rendered="#{loginBean.usuarioLogado.perfil eq 'PACIENTE'}" />
+							<h:panelGroup rendered="#{loginBean.usuarioLogado.perfil eq 'PACIENTE'}">
+							    <h:outputText value="#{loginBean.usuarioLogado.nome} (Seu Perfil)" style="color: green; font-weight: bold;" />
+						</h:panelGroup>
+											  
 					  <p:outputLabel for="status" value="Status:" />
 					  <p:selectOneMenu id="status" value="#{consultaBean.consulta.status}">
     				  <f:selectItem itemLabel="Pendente"  itemValue="#{false}" />

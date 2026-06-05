@@ -3,6 +3,7 @@ package com.mc.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -34,11 +35,17 @@ public class Consulta implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;	
+	
 	private LocalDateTime data;
 	private String medico;
+	
+	private String paciente;
 	@Enumerated(EnumType.STRING)
     private Especialidade especialidade;
 	private boolean status;
+	
+	@Column(columnDefinition = "TEXT")
+	private String relatorio;
 	
 	
 }

@@ -35,10 +35,18 @@ public class ConsultaBean implements Serializable{
 	
 	@Inject
 	private ConsultaService consultaService;
+	
 	@Inject
 	private UsuarioService usuarioService;
 	
+	@Inject
+	private LoginBean loginBean; 
+
+	 
+	
+	
 	private Consulta consulta = new Consulta();
+	private List<Usuario> todosOsPacientes = new ArrayList<>();
 	private List<Consulta> consultas = new ArrayList<Consulta>();
 	private List<Especialidade> especialidades = Arrays.asList(Especialidade.values());
 	private List<Usuario> medicos = new ArrayList<Usuario>();
@@ -48,10 +56,12 @@ public class ConsultaBean implements Serializable{
 	public void inicializar() {
 		log.debug("init pesquisa"); 
 		this.setConsultas(consultaService.buscarTodos());
+		
+		this.todosOsPacientes = usuarioService.buscarTodos();
 		limpar();
 	}
 	
-	// Método que será chamado pelo componente <p:ajax> da View
+
 		public void carregarMedicos() {
 			if (this.consulta != null && this.consulta.getEspecialidade() != null) {
 				this.medicos = usuarioService.buscarMedicosPorEspecialidade(this.consulta.getEspecialidade());
@@ -60,13 +70,19 @@ public class ConsultaBean implements Serializable{
 			}
 		}
 
-		// Método auxiliar para preparar a edição de uma consulta existente
 		public void prepararEdicao(Consulta consultaSelecionada) {
 			this.consulta = consultaSelecionada;
-			carregarMedicos(); // Carrega os médicos da especialidade já gravada na consulta
+			carregarMedicos(); 
 		}
 		
 	public void salvar() {
+		Usuario logado = loginBean.getUsuarioLogado();
+		
+		if(logado != null && logado.getPerfil() == com.mc.model.enums.Perfil.PACIENTE) {
+			this.consulta.setPaciente(logado.getNome());
+			
+		}
+		
 		log.info(consulta.toString());
 		consultaService.salvar(consulta);
 		this.consultas = consultaService.buscarTodos();
