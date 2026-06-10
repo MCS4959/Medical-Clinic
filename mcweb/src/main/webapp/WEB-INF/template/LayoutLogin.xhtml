@@ -8,22 +8,31 @@
       xmlns:p="http://primefaces.org/ui"
 	  xmlns:f="http://xmlns.jcp.org/jsf/core">	
      
-	
 <h:head>
-    <title>TesteApp</title>
-     <h:outputStylesheet library="css" name="LayoutLogin.css" />
-
+    <title><ui:insert name="titulo">MC-Web</ui:insert></title>
+   
+    
+    <h:outputStylesheet library="css" name="Login.css" />
 </h:head>
 			
-<h:body>
-   <div class="container">
-    <div class="card" id="conteudo">			
-        <ui:insert name="corpo" />
-    </div>
+<h:body styleClass="body-login">
 
-    <div id="footer">
-        <ui:include src="Footer.xhtml" />
-    </div>	 
+   <div class="login-container">
+   
+        <div class="login-header">
+            <p:graphicImage name="logo.png" library="imagens" style="width: 75px; border-radius: 50%;" />
+            <h2>MC-Web</h2>
+        </div>
+
+        <div id="conteudo">			
+            <ui:insert name="corpo" />
+        </div>
+
+        <div id="footer" style="margin-top: 25px;">
+            <ui:include src="Footer.xhtml" />
+        </div>	 
+    
    </div>
+   
 </h:body>
 </html>

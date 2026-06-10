@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap');
+
+
+* {
+    font-family: 'Outfit', sans-serif;
+    box-sizing: border-box;
+}
+
+.body-login {
+    background: linear-gradient(135deg, #141e30, #243b55) !important;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background: white !important;
+    border-radius: 14px !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15) !important;
+    width: 100%;
+    max-width: 400px;
+    padding: 35px !important;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.login-header h2 {
+    color: #141e30;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px 0 5px 0;
+}
+
+.login-header p {
+    color: #94a3b8;
+    font-size: 14px;
+    margin: 0 0 25px 0;
+}
+
+.login-form-box .ui-outputlabel {
+    color: #475569 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    display: block;
+    text-align: left;
+    margin-bottom: 6px;
+}
+
+.login-form-box .ui-inputtext, 
+.login-form-box .ui-password,
+.login-form-box .ui-password input {
+    margin-bottom: 18px !important;
+    width: 100% !important;
+}
+
+.btn-login-corp {
+    background: linear-gradient(135deg, #141e30, #243b55) !important;
+    width: 100% !important;
+    padding: 10px 0 !important;
+    font-size: 14px !important;
+    margin-top: 10px !important;
+    box-shadow: 0 4px 12px rgba(20, 30, 48, 0.2) !important;
+    border: none !important;
+    color: white !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s !important;
+}
+
+.btn-login-corp:hover {
+    opacity: 0.9 !important;
+    transform: translateY(-1px) !important;
+}
+
+
+/* ===== SEUS ESTILOS ANTIGOS (MANTIDOS EXATAMENTE IGUAIS) ===== */
+.dashboard-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.titulo-pagina {
+    font-size: 30px;
+    font-weight: bold;
+    color: #2563eb;
+    margin-bottom: 10px;
+}
+
+.subtitulo {
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.card-info {
+    text-align: center;
+    padding: 25px;
+    border-radius: 15px;
+    color: white;
+}
+
+.azul {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+.verde {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.laranja {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.numero-card {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.texto-card {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.status-confirmado {
+    background: #dcfce7;
+    color: #166534;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-pendente {
+    background: #fef9c3;
+    color: #854d0e;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
