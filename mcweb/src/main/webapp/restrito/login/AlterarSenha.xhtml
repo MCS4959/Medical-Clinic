@@ -1,0 +1,49 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="corpo">
+        <h:form id="formSenha">
+            <p:messages id="msgs" />
+
+            <p:panel header="Alterar Senha" style="max-width:450px; margin: 30px auto;">
+                <p:panelGrid columns="2" layout="grid">
+
+                    <p:outputLabel for="senhaAtual" value="Senha atual: *" />
+                    <p:password id="senhaAtual"
+                                value="#{alterarSenhaBean.senhaAtual}"
+                                required="true"
+                                feedback="false" 
+                                toggleMask="true"/>
+
+                    <p:outputLabel for="novaSenha" value="Nova senha: *" />
+                    <p:password id="novaSenha"
+                                value="#{alterarSenhaBean.novaSenha}"
+                                required="true"
+                                feedback="true" 
+                                toggleMask="true"/>
+
+                    <p:outputLabel for="confirmarSenha" value="Confirmar senha: *" />
+                    <p:password id="confirmarSenha"
+                                value="#{alterarSenhaBean.confirmarSenha}"
+                                required="true"
+                                feedback="false" 
+                                toggleMask="true"/>
+
+                    <p:outputLabel value="" />
+                    <p:commandButton value="Salvar nova senha"
+                                     icon="pi pi-save"
+                                     action="#{alterarSenhaBean.alterar}"
+                                     update="msgs"
+                                     process="@form"
+                                     oncomplete="setTimeout(function() { 
+                                         $('.ui-messages').slideUp(); 
+                                     }, 5000);" />
+                </p:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
