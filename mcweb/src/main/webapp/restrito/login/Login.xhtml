@@ -22,8 +22,11 @@
 				<p:message for="firstname" display="icon" />
 
 				<p:outputLabel for="senha" value="Senha: " />
-				<p:password id="senha" value="#{loginBean.senha}">
-					<f:validateLength minimum="2" />
+				<p:password 
+				id="senha" 
+				value="#{loginBean.senha}"
+				toggleMask="true">
+					<f:validateLength minimum="6" />
 				</p:password>
 
 			</h:panelGrid>

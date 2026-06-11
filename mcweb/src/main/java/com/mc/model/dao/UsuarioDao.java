@@ -3,6 +3,7 @@ package com.mc.model.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
@@ -15,6 +16,7 @@ import com.mc.util.jpa.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@RequestScoped
 public class UsuarioDao implements Serializable{
 
 	/**

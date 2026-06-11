@@ -1,0 +1,395 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap');
+
+* {
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background-color: #f0f4f8;
+    margin: 0;
+}
+
+/* ===== HEADER / MENUBAR ===== */
+.ui-menubar {
+    background: linear-gradient(135deg, #141e30, #243b55) !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 8px 20px !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+}
+
+.ui-menubar .ui-menuitem-link {
+    color: #cbd5e1 !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    border-radius: 6px !important;
+    padding: 8px 14px !important;
+    transition: background 0.2s, color 0.2s !important;
+}
+
+.ui-menubar .ui-menuitem-link:hover {
+    background: rgba(255,255,255,0.1) !important;
+    color: #ffffff !important;
+}
+
+.ui-menubar .ui-menuitem-link .ui-menuitem-icon {
+    color: #94a3b8 !important;
+}
+
+.ui-menubar-end .ui-outputlabel {
+    color: #94a3b8 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* ===== LAYOUT ===== */
+#conteudo {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 24px 32px !important;
+}
+
+#header {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+#footer {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 12px 0 !important;
+    color: #94a3b8 !important;
+    font-size: 12px !important;
+    text-align: center !important;
+}
+
+/* ===== TOOLBAR ===== */
+.ui-toolbar {
+    background: white !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    padding: 12px 16px !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+    margin-bottom: 16px !important;
+}
+
+/* ===== BOTÕES ===== */
+.ui-button {
+    background: linear-gradient(135deg, #141e30, #243b55) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    padding: 8px 18px !important;
+    transition: opacity 0.2s, transform 0.1s !important;
+    cursor: pointer !important;
+}
+
+.ui-button:hover {
+    opacity: 0.88 !important;
+    transform: translateY(-1px) !important;
+}
+
+.ui-button:active {
+    transform: translateY(0) !important;
+}
+
+.ui-button.ui-button-danger,
+.ui-button[title="Excluir"] {
+    background: linear-gradient(135deg, #b91c1c, #dc2626) !important;
+}
+
+.ui-button[title="Editar"] {
+    background: linear-gradient(135deg, #1d4ed8, #3b82f6) !important;
+    margin-right: 6px !important;
+}
+
+/* ===== TABELA ===== */
+.ui-datatable {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07) !important;
+    background: white !important;
+}
+
+.ui-datatable .ui-datatable-header {
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    color: #334155 !important;
+    font-weight: 600 !important;
+    padding: 14px 16px !important;
+}
+
+.ui-datatable thead th {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+    padding: 12px 16px !important;
+}
+
+.ui-datatable tbody tr {
+    transition: background 0.15s !important;
+}
+
+.ui-datatable tbody tr:nth-child(even) {
+    background: #f8fafc !important;
+}
+
+.ui-datatable tbody tr:hover {
+    background: #eff6ff !important;
+}
+
+.ui-datatable tbody td {
+    padding: 12px 16px !important;
+    color: #334155 !important;
+    font-size: 14px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    vertical-align: middle !important;
+}
+
+/* ===== FILTROS DA TABELA ===== */
+.ui-datatable .ui-column-filter {
+    width: 100% !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 6px !important;
+    padding: 5px 8px !important;
+    font-size: 13px !important;
+    color: #334155 !important;
+    background: white !important;
+    margin-top: 6px !important;
+    transition: border-color 0.2s !important;
+}
+
+.ui-datatable .ui-column-filter:focus {
+    border-color: #3b82f6 !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.15) !important;
+}
+
+/* ===== PAGINAÇÃO ===== */
+.ui-paginator {
+    background: #f8fafc !important;
+    border-top: 1px solid #e2e8f0 !important;
+    padding: 10px 16px !important;
+    border-radius: 0 0 12px 12px !important;
+}
+
+.ui-paginator .ui-paginator-page,
+.ui-paginator .ui-paginator-first,
+.ui-paginator .ui-paginator-prev,
+.ui-paginator .ui-paginator-next,
+.ui-paginator .ui-paginator-last {
+    border-radius: 6px !important;
+    color: #475569 !important;
+    font-size: 13px !important;
+    transition: background 0.15s !important;
+    min-width: 32px !important;
+    height: 32px !important;
+}
+
+.ui-paginator .ui-paginator-page:hover,
+.ui-paginator .ui-paginator-first:hover,
+.ui-paginator .ui-paginator-prev:hover,
+.ui-paginator .ui-paginator-next:hover,
+.ui-paginator .ui-paginator-last:hover {
+    background: #e2e8f0 !important;
+}
+
+.ui-paginator .ui-state-active {
+    background: linear-gradient(135deg, #141e30, #243b55) !important;
+    color: white !important;
+    border: none !important;
+}
+
+.ui-paginator .ui-paginator-rpp-options {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 6px !important;
+    padding: 4px 8px !important;
+    font-size: 13px !important;
+    color: #475569 !important;
+    background: white !important;
+}
+
+/* ===== DIALOG ===== */
+.ui-dialog {
+    border-radius: 14px !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2) !important;
+    border: none !important;
+    overflow: hidden !important;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+    background: linear-gradient(135deg, #141e30, #243b55) !important;
+    color: white !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    padding: 16px 20px !important;
+    border: none !important;
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+    color: #94a3b8 !important;
+    transition: color 0.2s !important;
+}
+
+.ui-dialog .ui-dialog-titlebar-close:hover {
+    color: white !important;
+}
+
+.ui-dialog .ui-dialog-content {
+    padding: 24px 28px !important;
+    background: white !important;
+}
+
+/* ===== PANEL GRID (formulário do dialog) ===== */
+.ui-panelgrid {
+    width: 100% !important;
+    border: none !important;
+}
+
+.ui-panelgrid td {
+    padding: 10px 12px !important;
+    border: none !important;
+    vertical-align: middle !important;
+}
+
+.ui-panelgrid .ui-outputlabel {
+    color: #475569 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+}
+
+/* ===== INPUTS ===== */
+.ui-inputtext,
+.ui-inputmask,
+.ui-password input {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    padding: 9px 13px !important;
+    font-size: 14px !important;
+    color: #1e293b !important;
+    font-family: 'Outfit', sans-serif !important;
+    width: 100% !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+    background: #f8fafc !important;
+}
+
+.ui-inputtext:focus,
+.ui-inputmask:focus,
+.ui-password input:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.15) !important;
+    outline: none !important;
+    background: white !important;
+}
+
+/* ===== SELECT ONE MENU ===== */
+.ui-selectonemenu {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    background: #f8fafc !important;
+    width: 100% !important;
+}
+
+.ui-selectonemenu:hover,
+.ui-selectonemenu.ui-state-focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.15) !important;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 14px !important;
+    color: #334155 !important;
+    padding: 9px 13px !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.ui-selectonemenu-panel {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-item {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 14px !important;
+    color: #334155 !important;
+    padding: 10px 14px !important;
+    transition: background 0.15s !important;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-item:hover,
+.ui-selectonemenu-panel .ui-state-highlight {
+    background: #eff6ff !important;
+    color: #1d4ed8 !important;
+}
+
+/* ===== MENSAGENS ===== */
+.ui-messages {
+    border-radius: 10px !important;
+    margin-bottom: 16px !important;
+    border: none !important;
+}
+
+.ui-messages-error {
+    background: #fef2f2 !important;
+    border-left: 4px solid #dc2626 !important;
+    color: #991b1b !important;
+}
+
+.ui-messages-info {
+    background: #eff6ff !important;
+    border-left: 4px solid #3b82f6 !important;
+    color: #1e40af !important;
+}
+
+.ui-messages-warn {
+    background: #fffbeb !important;
+    border-left: 4px solid #f59e0b !important;
+    color: #92400e !important;
+}
+
+/* ===== CONFIRM DIALOG ===== */
+.ui-confirmdialog {
+    border-radius: 14px !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2) !important;
+}
+
+.ui-confirmdialog .ui-dialog-titlebar {
+    background: #fff7ed !important;
+    color: #92400e !important;
+    border-bottom: 1px solid #fed7aa !important;
+}
+
+.ui-confirmdialog .ui-confirmdialog-message {
+    font-size: 14px !important;
+    color: #334155 !important;
+    padding: 8px 0 !important;
+}
+
+/* ===== GROWL ===== */
+.ui-growl {
+    top: 70px !important;
+    right: 20px !important;
+}
+
+.ui-growl-item-container {
+    border-radius: 10px !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
+    border: none !important;
+}

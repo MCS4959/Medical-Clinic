@@ -15,6 +15,7 @@ import javax.inject.Named;
 import com.mc.model.Usuario;
 import com.mc.model.enums.Especialidade;
 import com.mc.model.enums.Perfil;
+import com.mc.service.EmailService;
 import com.mc.service.UsuarioService;
 
 import lombok.Getter;
@@ -32,9 +33,13 @@ public class CadastrarUsuarioBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	@Inject
+	private EmailService emailService;
+	
 	@Inject
 	private UsuarioService usuarioService;
+	
 	@Inject
 	private LoginBean loginBean;
 
@@ -58,19 +63,48 @@ public class CadastrarUsuarioBean implements Serializable {
 	    }
 	}
 	
+	
 	public void salvar() {
 		log.info(usuario.toString());
-		
-		usuario = usuarioService.salvar(usuario);
-		this.setUsuarios(usuarioService.buscarTodos());
-		
-		FacesContext.getCurrentInstance().
-        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-        		"O usuario foi gravado com sucesso!", 
-        		usuario.toString()));
-		limpar();
-		log.info("usuario: " + usuario.toString());
-	}	
+
+	    // guarda a senha antes de salvar (caso futuramente criptografe)
+	    String senhaParaEmail = usuario.getSenha();
+
+	    usuario = usuarioService.salvar(usuario);
+	    this.setUsuarios(usuarioService.buscarTodos());
+
+	    // envia email só se for PACIENTE e tiver email preenchido
+	    if (usuario.getPerfil() == Perfil.PACIENTE 
+	            && usuario.getEmail() != null 
+	            && !usuario.getEmail().isEmpty()) {
+	        try {
+	            emailService.enviarSenhaAcesso(
+	                usuario.getEmail(),
+	                usuario.getNome(),
+	                senhaParaEmail
+	            );
+	            FacesContext.getCurrentInstance().addMessage(null,
+	                new FacesMessage(FacesMessage.SEVERITY_INFO,
+	                    "Usuário cadastrado com sucesso!",
+	                    "Email com a senha enviado para " + usuario.getEmail()));
+	        } catch (Exception e) {
+	            // cadastro já foi salvo, só avisa que o email falhou
+	            FacesContext.getCurrentInstance().addMessage(null,
+	                new FacesMessage(FacesMessage.SEVERITY_WARN,
+	                    "Usuário cadastrado, mas o email não foi enviado.",
+	                    e.getMessage()));
+	        }
+	    } else {
+	        FacesContext.getCurrentInstance().addMessage(null,
+	            new FacesMessage(FacesMessage.SEVERITY_INFO,
+	                "O usuário foi gravado com sucesso!",
+	                usuario.toString()));
+	    }
+
+	    limpar();
+	    log.info("usuario: " + usuario.toString());
+	}
+	
 	
 	public void excluir() {
 		try {
