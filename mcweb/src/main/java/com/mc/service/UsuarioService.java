@@ -49,7 +49,7 @@ public class UsuarioService implements Serializable{
 
 	public Usuario autenticar(String email, String senha){
 		
-		if(email.equals("toto@gmail.com") && senha.equals("minhasenhaperfeita123")) {		
+		if(email.equals("toto@gmail.com") && senha.equals("1234567")) {		
 			Usuario usuario = new Usuario();
 			usuario.setEmail("toto@gmail.com");
 			usuario.setNome("TOTO");
@@ -66,6 +66,26 @@ public class UsuarioService implements Serializable{
 		}
 		return null;
 	}
+	
+	
+	public void alterarSenha(Usuario usuario, String senhaAtual, String novaSenha, String confirmarSenha) {
+		
+		if (!usuario.getSenha().equals(senhaAtual)) {
+			throw new RuntimeException("Senha atual incorreta.");
+		}
+		
+		if (!novaSenha.equals(confirmarSenha)) {
+			throw new RuntimeException("A nova senha e a confirmação não coincidem.");
+		}
+		
+		if (novaSenha.length() < 6) {
+			throw new RuntimeException("A nova senha deve ter pelo menos 6 caracteres.");
+		}
+		
+		usuario.setSenha(novaSenha);
+		usuarioDao.salvar(usuario);
+	}
+	
 	
 	public void excluir(Usuario usuario) {
 
