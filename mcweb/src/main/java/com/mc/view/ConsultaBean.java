@@ -156,16 +156,6 @@ public class ConsultaBean implements Serializable{
 	    return Especialidade.values();
 	}
 	
-	private Consulta consultaSelecionada;
-
-	public Consulta getConsultaSelecionada() {
-	    return consultaSelecionada;
-	}
-
-	public void setConsultaSelecionada(Consulta consultaSelecionada) {
-	    this.consultaSelecionada = consultaSelecionada;
-	}
-		
 	public void limpar() {
 
 		this.consulta = new Consulta();

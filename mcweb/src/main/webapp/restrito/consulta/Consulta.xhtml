@@ -22,7 +22,7 @@
                                      oncomplete="PF('editarDialogWidgetVar').show()"
                                      update="editarDialog"
                                      actionListener="#{consultaBean.limpar}"
-                                     process="@this" />
+                                     process="@this" rendered="#{loginBean.usuario.perfil eq 'PACIENTE' or loginBean.usuario.perfil eq 'ATENDENTE'}"/>
                 </p:toolbarGroup>
             </p:toolbar>
 
@@ -67,6 +67,10 @@
                     <h:outputText value="#{consulta.relatorio}" />
                 </p:column>
                 
+                <p:column headerText="Prontuario:">
+
+                </p:column>
+                
                 <p:column headerText="Operações" rendered="#{loginBean.usuario.perfil eq 'PACIENTE' or loginBean.usuario.perfil eq 'ATENDENTE'}">
                     <p:commandButton id="btnEditar"
 		                 icon="pi pi-pencil"
@@ -74,36 +78,18 @@
 		                 actionListener="#{consultaBean.prepararEdicao(consulta)}"
 		                 oncomplete="PF('editarDialogWidgetVar').show()"
 		                 update=":formulario:editarDialog"
-		                 process="@this" rendered="#{consulta.status eq 'false'}"/>
+		                 process="@this" rendered="#{consulta.status eq 'false'}" />
 
                     <p:commandButton id="btnExcluir"
                                      icon="pi pi-trash"
                                      title="Excluir"
                                      onclick="PF('confirmacaoExclusao').show();"
-                                     process="@this" rendered="#{loginBean.usuario.perfil eq 'ATENDENTE'}"/>
-
-                                <f:setPropertyActionListener
-                                     target="#{consultaBean.consultaSelecionada}"
-                                     value="#{consulta}" />
-                    </p:commandButton>
-                    
-                    <p:commandButton id="btnVisualizar"
-                                     icon="pi pi-eye"
-                                     title="Visualizar Relatório"
-                                     process="@this"
-                                     update=":formulario:dlgRelatorio"
-                                     oncomplete="PF('dlgRelatorio').show()"
-                                     rendered="#{consulta.status eq 'true'}"/>
- 
-                                <f:setPropertyActionListener
-                                     target="#{consultaBean.consultaSelecionada}"
-                                     value="#{consulta}" />
-                    
+                                     process="@this" rendered="#{loginBean.usuario.perfil eq 'ATENDENTE'}">
                         <f:setPropertyActionListener target="#{consultaBean.consulta}" value="#{consulta}" />
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
-
+            
             <p:dialog id="editarDialog"
                       header="Marcar Consulta"
                       widgetVar="editarDialogWidgetVar"
@@ -206,22 +192,6 @@
                                  process="@this" 
                                  oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000);"/>
             </p:confirmDialog>
-            
-            <p:dialog id="dlgRelatorio"
-                      widgetVar="dlgRelatorio"
-                      header="Relatório Médico"
-                      modal="true"
-                      width="700"
-                      resizable="false">
-
-                   <p:inputTextarea
-                      value="#{consultaBean.consultaSelecionada.relatorio}"
-                      rows="15"
-                      cols="80"
-                      readonly="true"
-                      autoResize="false"/>
-
-            </p:dialog>
         </h:form>
     </ui:define>
 
