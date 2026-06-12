@@ -57,26 +57,48 @@
                 </p:column>
 
                 	<p:column headerText="Status">
-    				<h:outputText value="Agendado" 
+    				<h:outputText value="Realizado"
                   		rendered="#{consulta.status}" />
    					<h:outputText value="Pendente"  
                   		rendered="#{!consulta.status}" />
 					</p:column>
-					
-                <p:column headerText="Operações">
+				
+                <p:column headerText="Prontuario:">
+                    <h:outputText value="#{consulta.relatorio}" />
+                </p:column>
+                
+                <p:column headerText="Operações" rendered="#{loginBean.usuario.perfil eq 'PACIENTE' or loginBean.usuario.perfil eq 'ATENDENTE'}">
                     <p:commandButton id="btnEditar"
 		                 icon="pi pi-pencil"
 		                 title="Editar"
 		                 actionListener="#{consultaBean.prepararEdicao(consulta)}"
 		                 oncomplete="PF('editarDialogWidgetVar').show()"
 		                 update=":formulario:editarDialog"
-		                 process="@this" />
+		                 process="@this" rendered="#{consulta.status eq 'false'}"/>
 
                     <p:commandButton id="btnExcluir"
                                      icon="pi pi-trash"
                                      title="Excluir"
                                      onclick="PF('confirmacaoExclusao').show();"
-                                     process="@this">
+                                     process="@this" rendered="#{loginBean.usuario.perfil eq 'ATENDENTE'}"/>
+
+                                <f:setPropertyActionListener
+                                     target="#{consultaBean.consultaSelecionada}"
+                                     value="#{consulta}" />
+                    </p:commandButton>
+                    
+                    <p:commandButton id="btnVisualizar"
+                                     icon="pi pi-eye"
+                                     title="Visualizar Relatório"
+                                     process="@this"
+                                     update=":formulario:dlgRelatorio"
+                                     oncomplete="PF('dlgRelatorio').show()"
+                                     rendered="#{consulta.status eq 'true'}"/>
+ 
+                                <f:setPropertyActionListener
+                                     target="#{consultaBean.consultaSelecionada}"
+                                     value="#{consulta}" />
+                    
                         <f:setPropertyActionListener target="#{consultaBean.consulta}" value="#{consulta}" />
                     </p:commandButton>
                 </p:column>
@@ -95,9 +117,9 @@
                       maximizable="true"
                       height="70%"
                       fitViewport="true"
-                      responsive="true">
+                      responsive="true" >
 
-                <p:panelGrid id="grid" columns="2" layout="grid">		
+                <p:panelGrid id="grid" columns="2" layout="grid" >		
                 
                 	<p:outputLabel for="data" value="Data e Hora da Consulta:" />
 					<p:datePicker id="data" 
@@ -133,7 +155,7 @@
 						 <p:outputLabel for="selecaoPaciente" value="Paciente:" 
 						               rendered="#{loginBean.usuarioLogado.perfil eq 'ATENDENTE'}" />
 							<p:selectOneMenu id="selecaoPaciente" 
-							                 value="#{consultaBean.consulta.paciente}" 
+							                 value="#{consultaBean.consulta.paciente}"
 							                 required="true"
 							                 requiredMessage="É obrigatório selecionar um paciente."
 							                 rendered="#{loginBean.usuarioLogado.perfil eq 'ATENDENTE'}">
@@ -153,7 +175,6 @@
 					  <p:outputLabel for="status" value="Status:" />
 					  <p:selectOneMenu id="status" value="#{consultaBean.consulta.status}">
     				  <f:selectItem itemLabel="Pendente"  itemValue="#{false}" />
-    				  <f:selectItem itemLabel="Agendado" itemValue="#{true}" />
 					  </p:selectOneMenu>
 
                     <p:outputLabel value="" />
@@ -185,7 +206,22 @@
                                  process="@this" 
                                  oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000);"/>
             </p:confirmDialog>
+            
+            <p:dialog id="dlgRelatorio"
+                      widgetVar="dlgRelatorio"
+                      header="Relatório Médico"
+                      modal="true"
+                      width="700"
+                      resizable="false">
 
+                   <p:inputTextarea
+                      value="#{consultaBean.consultaSelecionada.relatorio}"
+                      rows="15"
+                      cols="80"
+                      readonly="true"
+                      autoResize="false"/>
+
+            </p:dialog>
         </h:form>
     </ui:define>
 
