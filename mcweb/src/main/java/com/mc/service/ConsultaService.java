@@ -23,7 +23,12 @@ public class ConsultaService implements Serializable{
 	public void excluir(Consulta consulta) {
 		this.consultaDao.excluir(consulta);
 	}
-
+	
+	
+	public List<Consulta> buscarConsultasDoPaciente(String nomePaciente) {
+	    return consultaDao.buscarPorPaciente(nomePaciente);
+	}
+	
 	public List<Consulta> buscarTodos() {
 		
 		return consultaDao.buscarTodos();
