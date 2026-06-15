@@ -62,15 +62,7 @@
    					<h:outputText value="Pendente"  
                   		rendered="#{!consulta.status}" />
 					</p:column>
-				
-                <p:column headerText="Prontuario:">
-                    <h:outputText value="#{consulta.relatorio}" />
-                </p:column>
-                
-                <p:column headerText="Prontuario:">
 
-                </p:column>
-                
                 <p:column headerText="Operações" rendered="#{loginBean.usuario.perfil eq 'PACIENTE' or loginBean.usuario.perfil eq 'ATENDENTE'}">
                     <p:commandButton id="btnEditar"
 		                 icon="pi pi-pencil"
@@ -88,7 +80,26 @@
                         <f:setPropertyActionListener target="#{consultaBean.consulta}" value="#{consulta}" />
                     </p:commandButton>
                 </p:column>
+                
+                <p:column headerText="Prontuário" >
+                 <p:commandButton icon="pi pi-eye" title="Ver Prontuário" value="Ver Prontuário" oncomplete="PF('prontuarioDialogVar').show()" update=":formulario:prontuarioDialog" rendered="#{consulta.status}" process="@this">
+                   <f:setPropertyActionListener target="#{consultaBean.consulta}" value="#{consulta}"/>
+                 </p:commandButton>
+                </p:column>
+                
             </p:dataTable>
+            
+            <p:dialog id="prontuarioDialog"
+                      header="Prontuário da Consulta"
+                      widgetVar="prontuarioDialogVar"
+                      modal="true"
+                      resizable="true"
+                      closeOnEscape="true"
+                      width="60%"
+                      responsive="true">
+        <h:outputText value="#{consultaBean.consulta.relatorio}"
+                      style="white-space: pre-wrap;" />
+            </p:dialog>
             
             <p:dialog id="editarDialog"
                       header="Marcar Consulta"
