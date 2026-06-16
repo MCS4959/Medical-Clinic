@@ -51,6 +51,13 @@ public class ConsultaDao implements Serializable{
 		} 
 	}
 	
+	public List<Consulta> buscarPorPaciente(String nomePaciente) {
+	    String query = "select a from Consulta a where a.paciente = :nomePaciente order by a.data desc";
+	    Query q = manager.createQuery(query);
+	    q.setParameter("nomePaciente", nomePaciente);
+	    return q.getResultList();
+	}
+	
 	public Consulta buscarPeloCodigo(Long id) {
 		return manager.find(Consulta.class, id);
 	}

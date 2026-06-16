@@ -58,11 +58,32 @@ public class ConsultaBean implements Serializable{
 	
 	@PostConstruct
 	public void inicializar() {
-		log.debug("init pesquisa"); 
-		this.setConsultas(consultaService.buscarTodos());
-		
-		this.todosOsPacientes = usuarioService.buscarTodos();
-		limpar();
+		 log.debug("init pesquisa");
+
+		    try {
+		        Usuario usuarioLogado = loginBean.getUsuarioLogado();
+
+		        if (usuarioLogado != null) {
+		            String nomePaciente = usuarioLogado.getNome();
+
+		            if (usuarioLogado.getPerfil() == com.mc.model.enums.Perfil.PACIENTE) {
+		                
+		                List<Consulta> minhasConsultas = consultaService.buscarConsultasDoPaciente(nomePaciente);
+		                this.setConsultas(minhasConsultas);
+		            } else {
+		                
+		                this.setConsultas(consultaService.buscarTodos());
+		            }
+		        } else {
+		            this.setConsultas(consultaService.buscarTodos());
+		        }
+		    } catch (Exception e) {
+		        log.error("Erro ao inicializar consultas: " + e.getMessage());
+		        this.setConsultas(consultaService.buscarTodos());
+		    }
+
+		    this.todosOsPacientes = usuarioService.buscarTodos();
+		    limpar();
 	}
 	
 
@@ -79,60 +100,63 @@ public class ConsultaBean implements Serializable{
 			carregarMedicos(); 
 		}
 		
-	public void salvar() {
-		Usuario logado = loginBean.getUsuarioLogado();
+		public void salvar() {
+		    Usuario logado = loginBean.getUsuarioLogado();
 
-	    if (logado != null && logado.getPerfil() == com.mc.model.enums.Perfil.PACIENTE) {
-	        this.consulta.setPaciente(logado.getNome());
-	    }
+		    if (logado != null && logado.getPerfil() == com.mc.model.enums.Perfil.PACIENTE) {
+		        this.consulta.setPaciente(logado.getNome());
+		    }
 
-	    log.info(consulta.toString());
-	    consultaService.salvar(consulta);
-	    this.consultas = consultaService.buscarTodos();
+		    log.info(consulta.toString());
+		    consultaService.salvar(consulta);
 
-	    // busca o paciente pelo nome para pegar o email
-	    try {
-	        String nomePaciente = consulta.getPaciente();
-	        if (nomePaciente != null && !nomePaciente.isEmpty()) {
+		    if (logado != null && logado.getPerfil() == com.mc.model.enums.Perfil.PACIENTE) {
+		        this.consultas = consultaService.buscarConsultasDoPaciente(logado.getNome());
+		    } else {
+		        
+		        this.consultas = consultaService.buscarTodos();
+		    }
 
-	            // busca o usuário paciente pelo nome
-	            Usuario paciente = usuarioService.buscarTodos()
-	                .stream()
-	                .filter(u -> u.getNome().equals(nomePaciente) 
-	                          && u.getPerfil() == com.mc.model.enums.Perfil.PACIENTE)
-	                .findFirst()
-	                .orElse(null);
+		    try {
+		        String nomePaciente = consulta.getPaciente();
+		        if (nomePaciente != null && !nomePaciente.isEmpty()) {
 
-	            if (paciente != null && paciente.getEmail() != null) {
+		            Usuario paciente = usuarioService.buscarTodos()
+		                .stream()
+		                .filter(u -> u.getNome().equals(nomePaciente) 
+		                          && u.getPerfil() == com.mc.model.enums.Perfil.PACIENTE)
+		                .findFirst()
+		                .orElse(null);
 
-	                // formata a data
-	                String dataFormatada = consulta.getData() != null
-	                    ? consulta.getData().format(
-	                        java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm"))
-	                    : "A definir";
+		            if (paciente != null && paciente.getEmail() != null) {
 
-	                emailService.enviarConfirmacaoConsulta(
-	                    paciente.getEmail(),
-	                    paciente.getNome(),
-	                    consulta.getMedico(),
-	                    consulta.getEspecialidade() != null 
-	                        ? consulta.getEspecialidade().toString() : "",
-	                    dataFormatada
-	                );
-	            }
-	        }
-	    } catch (Exception e) {
-	        // consulta já foi salva, só loga o erro do email
-	        log.warn("Email de confirmação não enviado: " + e.getMessage());
-	    }
+		                String dataFormatada = consulta.getData() != null
+		                    ? consulta.getData().format(
+		                        java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm"))
+		                    : "A definir";
 
-	    FacesContext.getCurrentInstance().addMessage(null,
-	        new FacesMessage(FacesMessage.SEVERITY_INFO,
-	            "Consulta agendada com sucesso!", consulta.toString()));
+		                emailService.enviarConfirmacaoConsulta(
+		                    paciente.getEmail(),
+		                    paciente.getNome(),
+		                    consulta.getMedico(),
+		                    consulta.getEspecialidade() != null 
+		                        ? consulta.getEspecialidade().toString() : "",
+		                    dataFormatada
+		                );
+		            }
+		        }
+		    } catch (Exception e) {
+		    	
+		        log.warn("Email de confirmação não enviado: " + e.getMessage());
+		    }
 
-	    limpar();
-	    log.info("consulta: " + consulta.toString());
-	}
+		    FacesContext.getCurrentInstance().addMessage(null,
+		        new FacesMessage(FacesMessage.SEVERITY_INFO,
+		            "Consulta agendada com sucesso!", consulta.toString()));
+
+		    limpar();
+		    log.info("consulta: " + consulta.toString());
+		}
 	
 	
 	public void excluir() {
@@ -155,7 +179,7 @@ public class ConsultaBean implements Serializable{
 	public Especialidade[] getEspecialidades() {
 	    return Especialidade.values();
 	}
-		
+	
 	public void limpar() {
 
 		this.consulta = new Consulta();

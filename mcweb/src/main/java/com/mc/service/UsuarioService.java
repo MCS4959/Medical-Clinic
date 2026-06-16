@@ -39,6 +39,12 @@ public class UsuarioService implements Serializable{
 	            throw new RuntimeException("ATENDENTE só pode cadastrar PACIENTE");
 	        }
 	    }
+	    
+	    if (usuario.getSenha() != null && !usuario.getSenha().startsWith("$2a$")) {
+	    	
+	        String senhaCriptografada = com.mc.util.SenhaUtil.criptografar(usuario.getSenha());
+	        usuario.setSenha(senhaCriptografada);
+	        }
 
 	    return usuarioDao.salvar(usuario);
 	}
@@ -47,30 +53,29 @@ public class UsuarioService implements Serializable{
 		return usuarioDao.buscarPorEmail(email);
 	}
 
-	public Usuario autenticar(String email, String senha){
-		
-		if(email.equals("toto@gmail.com") && senha.equals("1234567")) {		
-			Usuario usuario = new Usuario();
-			usuario.setEmail("toto@gmail.com");
-			usuario.setNome("TOTO");
-			usuario.setPerfil(Perfil.ADMIN);
+	public Usuario autenticar(String email, String senhaPlana) {
+	    
+	    if ("lima.vitor2@aluno.ifsp.edu.br".equals(email) && "1234567".equals(senhaPlana)) {		
+	        Usuario usuario = new Usuario();
+	        usuario.setEmail("lima.vitor2@aluno.ifsp.edu.br");
+	        usuario.setNome("Vitor");
+	        usuario.setPerfil(Perfil.ADMIN);
+	        return usuario;
+	    }
 
-			return usuario;
-
-		}
-
-		Usuario usuario_db = buscarPorEmail(email);
-		if(usuario_db != null && usuario_db.getSenha().equals(senha)){
-			log.info(usuario_db.toString() + " logado");
-			return usuario_db;
-		}
-		return null;
+	    Usuario usuario = usuarioDao.buscarPorEmail(email);
+	    
+	    if (usuario != null && com.mc.util.SenhaUtil.verificar(senhaPlana, usuario.getSenha())) {
+	        return usuario; 
+	    }
+	    
+	    return null; 
 	}
 	
 	
 	public void alterarSenha(Usuario usuario, String senhaAtual, String novaSenha, String confirmarSenha) {
-		
-		if (!usuario.getSenha().equals(senhaAtual)) {
+
+		if (!com.mc.util.SenhaUtil.verificar(senhaAtual, usuario.getSenha())) {
 			throw new RuntimeException("Senha atual incorreta.");
 		}
 		
@@ -82,7 +87,7 @@ public class UsuarioService implements Serializable{
 			throw new RuntimeException("A nova senha deve ter pelo menos 6 caracteres.");
 		}
 		
-		usuario.setSenha(novaSenha);
+		usuario.setSenha(com.mc.util.SenhaUtil.criptografar(novaSenha));
 		usuarioDao.salvar(usuario);
 	}
 	

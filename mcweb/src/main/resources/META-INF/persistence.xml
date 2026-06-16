@@ -7,12 +7,20 @@
 	<persistence-unit name="mcPU" transaction-type="RESOURCE_LOCAL">
 
 		<properties>
-			<!-- String de conexão com o BD -->
+			<!-- String de conexão com o BD
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://mcweb-db.cdig4a7ojcdb.us-east-1.rds.amazonaws.com:3306/mcweb_db" />
+				value="jdbc:mysql://localhost:3306/mcweb_db" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="ifsp" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+			--> 
+			<!-- -->
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://mcweb-db.cdig4a7ojcdb.us-east-1.rds.amazonaws.com:3306/mcweb" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="minhasenhaperfeita123" />
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+			
 			
 			<!--  Configuração do hibernate JPA -->			
 			<!-- validate | update | create | create-drop -->			
