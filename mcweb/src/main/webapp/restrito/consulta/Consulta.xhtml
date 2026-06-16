@@ -38,10 +38,10 @@
                          paginatorAlwaysVisible="true"
                          paginatorPosition="bottom"
                          rowsPerPageTemplate="5,10,15">
-
-                <p:column headerText="Id">
+                         
+                <p:column headerText="Id" rendered="#{loginBean.usuario.perfil eq 'ATENDENTE'}">
                     <h:outputText value="#{consulta.id}" />
-                </p:column>
+                </p:column>         
 
                 <p:column headerText="Data">
     			<h:outputText value="#{consulta.data}" 
@@ -50,6 +50,10 @@
 
                 <p:column headerText="Médico" filterBy="#{consulta.medico}" sortBy="#{consulta.medico}">
                     <h:outputText value="#{consulta.medico}" />
+                </p:column>
+                
+                <p:column headerText="Paciente" filterBy="#{consulta.paciente}" sortBy="#{consulta.paciente}" rendered="#{loginBean.usuario.perfil eq 'MEDICO' or loginBean.usuario.perfil eq 'ATENDENTE'}">
+                    <h:outputText value="#{consulta.paciente}" />
                 </p:column>
 
                 <p:column headerText="Especialidade">
