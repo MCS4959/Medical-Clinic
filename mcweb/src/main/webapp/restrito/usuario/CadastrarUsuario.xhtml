@@ -29,11 +29,11 @@
 	    		style="margin-top: 20px" emptyMessage="Nenhum usuario encontrado." rows="10"
 	    		paginator="true" paginatorAlwaysVisible="true" paginatorPosition="bottom"
 	    		rowsPerPageTemplate="5,10,15">		
-
-				<p:column headerText="Id">
+	    		
+	    		<p:column headerText="Id">
 					<h:outputText value="#{usuario.id}" />
 				</p:column>
-				
+
 				<p:column headerText="Perfil"
 				    filterBy="#{usuario.perfil}" sortBy="#{usuario.perfil}">
 					<h:outputText value="#{usuario.perfil}" />
