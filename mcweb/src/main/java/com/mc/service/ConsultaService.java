@@ -28,7 +28,7 @@ public class ConsultaService implements Serializable{
 	public List<Consulta> buscarConsultasDoPaciente(String nomePaciente) {
 	    return consultaDao.buscarPorPaciente(nomePaciente);
 	}
-	
+
 	public List<Consulta> buscarTodos() {
 		
 		return consultaDao.buscarTodos();
