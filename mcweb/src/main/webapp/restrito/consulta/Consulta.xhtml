@@ -81,7 +81,7 @@
                     </p:commandButton>
                 </p:column>
                 
-                <p:column headerText="Prontuário" >
+                <p:column headerText="Prontuário" rendered="#{loginBean.usuario.perfil eq 'PACIENTE' or loginBean.usuario.perfil eq 'MEDICO'}">
                  <p:commandButton icon="pi pi-eye" title="Ver Prontuário" value="Ver Prontuário" oncomplete="PF('prontuarioDialogVar').show()" update=":formulario:prontuarioDialog" rendered="#{consulta.status}" process="@this">
                    <f:setPropertyActionListener target="#{consultaBean.consulta}" value="#{consulta}"/>
                  </p:commandButton>
