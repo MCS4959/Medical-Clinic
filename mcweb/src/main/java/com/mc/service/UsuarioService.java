@@ -55,10 +55,10 @@ public class UsuarioService implements Serializable{
 
 	public Usuario autenticar(String email, String senhaPlana) {
 	    
-	    if ("lima.vitor2@aluno.ifsp.edu.br".equals(email) && "1234567".equals(senhaPlana)) {		
+	    if ("toto@gmail.com".equals(email) && "1234567".equals(senhaPlana)) {		
 	        Usuario usuario = new Usuario();
-	        usuario.setEmail("lima.vitor2@aluno.ifsp.edu.br");
-	        usuario.setNome("Vitor");
+	        usuario.setEmail("toto@gmail.com");
+	        usuario.setNome("toto");
 	        usuario.setPerfil(Perfil.ADMIN);
 	        return usuario;
 	    }
