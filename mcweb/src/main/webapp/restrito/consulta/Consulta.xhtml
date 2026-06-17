@@ -39,10 +39,6 @@
                          paginatorPosition="bottom"
                          rowsPerPageTemplate="5,10,15">
                          
-                <p:column headerText="Id" rendered="#{loginBean.usuario.perfil eq 'ATENDENTE'}">
-                    <h:outputText value="#{consulta.id}" />
-                </p:column>         
-
                 <p:column headerText="Data">
     			<h:outputText value="#{consulta.data}" 
                   	converter="localDateTimeConverter" />
